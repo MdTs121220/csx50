@@ -31,7 +31,7 @@ int main(void)
         printf("Years: 0");
     }
 
-    // TODO: Print number of years
+
     do
     {
         n = round(n + (n / 3) - (n / 4));
@@ -39,5 +39,6 @@ int main(void)
 
     }
     while (n < end_size);
+    // TODO: Print number of years
     printf("Years: %i\n",  year);
 }
