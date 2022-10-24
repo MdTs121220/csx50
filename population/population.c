@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <math.h>
 
 int main(void)
 {
@@ -31,4 +32,12 @@ int main(void)
     }
 
     // TODO: Print number of years
+    do
+    {
+        n = round(n + (n / 3) - (n / 4));
+        year += 1;
+
+    }
+    while (n < end_size);
+    printf("Years: %i",  year);
 }
