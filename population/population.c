@@ -1,3 +1,8 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//---------------------------------
 #include <cs50.h>
 #include <stdio.h>
 #include <math.h>
@@ -25,20 +30,20 @@ int main(void)
     int n = start_size;
     int calculator = 0;
 
-    // if else returns 0 if end and start size is 0
-    if (start_size == end_size)
+    if (start_size == end_size) // if else returns 0 if end and start size is 0
     {
         printf("Years: 0");
     }
 
-
-    do
+    do  //looping again
     {
         n = round(n + (n / 3) - (n / 4));
         year += 1;
 
     }
     while (n < end_size);
+
     // TODO: Print number of years
     printf("Years: %i\n",  year);
 }
+//end of program
