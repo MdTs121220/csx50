@@ -39,5 +39,5 @@ int main(void)
 
     }
     while (n < end_size);
-    printf("Years: %i",  year);
+    printf("Years: %i\n",  year);
 }
