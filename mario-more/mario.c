@@ -24,7 +24,7 @@ int main(void)
 
     {
 
-        for (int column = 0; column < height; column++) // piramid create
+        for (int column = 0; column < height; column++) // piramid create right
         {
             if (row + column >= height - 1)
             {
@@ -35,6 +35,19 @@ int main(void)
             {
                 printf(" "); //space
             }
+
+        for (int column2 = 0; column2 < height; column2++) // piramid create left
+        {
+            if (row + column2 >= height - 1)
+            {
+                printf("#");
+            }
+
+            else
+            {
+                printf(" "); //space
+            }
+
         }
         printf("\n");
     }
