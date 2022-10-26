@@ -11,23 +11,23 @@ int main(void)
     height = get_int("Height: \n");  //Input height first
     }
 
-     // The user can only input a Height between 1 and 8
-    while
-    ((height < 1) || (height > 8));
 
-    // for loop to create the height of the row
+    while
+    ((height < 1) || (height > 8));  // boolean logic user or
+
+    // for loop
     for (int row = 0; row < height; row++)
     {
-        // for loop create the width of the piramid
-        for (int column = 0; column < height; column++)
+
+        for (int column = 0; column < height; column++) // piramid create
         {
-            // if row plus column is greater than or equal than height -1 space print the hashes
+
             if (row + column >= height - 1)
                 printf("#");
 
-            // adding spaces
+
             else
-            printf(" ");
+            printf(" "); //space
         }
         printf("\n");
     }
