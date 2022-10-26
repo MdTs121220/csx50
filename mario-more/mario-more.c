@@ -26,17 +26,17 @@ int main(void)
 
         for (int column = row + 1; column < height; column++)
         {
-            printf(" ");
+            printf(" "); //space
         }
 
-        // 2nd Nested, prints the actual pyramid
-        for (int hashes = height + row + 1; hashes > height; hashes--)
+
+        for (int hashes = height + row + 1; hashes > height; hashes--) //right
         {
             printf("#");
         }
         printf("  ");
 
-        for (int hashes = height + row + 1; hashes > height; hashes--)
+        for (int hashes = height + row + 1; hashes > height; hashes--) //left
         {
             printf("#");
         }
