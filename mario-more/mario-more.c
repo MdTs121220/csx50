@@ -24,7 +24,7 @@ int main(void)
 
     {
 
-        for (int spaces = row + 1; spaces < height; spaces++)
+        for (int column = row + 1; column < height; column++)
         {
             printf(" ");
         }
