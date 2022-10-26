@@ -16,8 +16,7 @@ int main(void)
         height = get_int("Height: ");  //Input height first
     }
 
-    while
-    ((height < 1) || (height > 8));  // boolean logic use OR
+    while ((height < 1) || (height > 8));  // boolean logic use OR
 
     // for loop
     for (int row = 0; row < height; row++)
