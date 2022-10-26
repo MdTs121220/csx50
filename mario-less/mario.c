@@ -11,7 +11,6 @@ int main(void)
     height = get_int("Height: ");  //Input height first
     }
 
-
     while
     ((height < 1) || (height > 8));  // boolean logic user or
 
