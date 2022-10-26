@@ -8,7 +8,7 @@ int main(void)
 
     do
     {
-    height = get_int("Height: \n");  //Input height first
+    height = get_int("Height: ");  //Input height first
     }
 
 
