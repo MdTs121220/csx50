@@ -1,3 +1,9 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//mario.c
+//---------------------------------
 #include <cs50.h>
 #include <stdio.h>
 
@@ -5,14 +11,13 @@ int main(void)
 {
      int height;
 
-
     do
     {
     height = get_int("Height: ");  //Input height first
     }
 
     while
-    ((height < 1) || (height > 8));  // boolean logic user or
+    ((height < 1) || (height > 8));  // boolean logic use OR
 
     // for loop
     for (int row = 0; row < height; row++)
@@ -23,7 +28,6 @@ int main(void)
 
             if (row + column >= height - 1)
                 printf("#");
-
 
             else
             printf(" "); //space
