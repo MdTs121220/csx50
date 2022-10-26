@@ -36,9 +36,10 @@ int main(void)
         }
         printf("  ");
 
-for (int hashes = height + row + 1; hashes > height; hashes--)        {
-    printf("#");
-}
+        for (int hashes = height + row + 1; hashes > height; hashes--)
+        {
+            printf("#");
+        }
         printf("\n");
     }
 }
