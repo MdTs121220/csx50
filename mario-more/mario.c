@@ -24,17 +24,15 @@ int main(void)
 
     {
 
-        for (int column = 0; column < height; column++) // piramid create
+        for (int spaces = row + 1; spaces < height; spaces++)
         {
-            if (row + column >= height - 1)
-            {
-                printf("#");
-            }
+            printf(" ");
+        }
 
-            else
-            {
-                printf(" "); //space
-            }
+        // 2nd Nested, prints the actual pyramid
+        for (int hashes = height + row + 1; hashes > height; hashes--)
+        {
+            printf("#");
         }
         printf("\n");
     }
