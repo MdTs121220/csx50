@@ -34,6 +34,11 @@ int main(void)
         {
             printf("#");
         }
+        // 2nd Nested, prints the actual pyramid
+        for (int hashes = height + row + 1; hashes > height; hashes--)
+        {
+            printf("#");
+        }
         printf("\n");
     }
 }
