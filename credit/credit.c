@@ -12,7 +12,7 @@ int main(void)
 
     long n = get_long("Entry Number: "); // Prompt Input card number
 
-    // Calculate the length
+    // Perhitungan panjang angka yang diinput
     int i = 0;
     long l = n;
     while (l > 0)
@@ -21,13 +21,13 @@ int main(void)
         i++;
     }
 
-    if (i != 13 && i != 15 && i != 16) // Check length number if valid
+    if (i != 13 && i != 15 && i != 16) // Cek number valid atau gak nya
     {
         printf("INVALID\n");
         return 0;
     }
 
-    // Calculate sum
+    // Penjumlahan
     int jum1 = 0;
     int jum2 = 0;
     long x = n;
@@ -56,7 +56,7 @@ int main(void)
     while (x > 0);
     total = jum1 + jum2;
 
-    if (total % 10 != 0) // Checking digit
+    if (total % 10 != 0) // cek angka digit
     {
         printf("INVALID\n");
         return 0;
