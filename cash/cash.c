@@ -1,3 +1,9 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//Cash.c
+//---------------------------------
 #include <cs50.h>
 #include <stdio.h>
 
@@ -38,20 +44,18 @@ int main(void)
 int get_cents(void)
 {
     // TODO
-    // Get the cents from the user
     int cents;
     do
     {
-        cents = get_int("Change owed: ");
+        cents = get_int("Change owed: "); // Get the cents from the user
     }
     while (cents < 0);
-    return 0;
+    return cents;
 }
 
-int calculate_quarters(int cents)
+int calculate_quarters(int cents) // Calculate the number of quarters
 {
     // TODO
-    // Calculate the number of quarters
     int quarters = 0;
 
     while (cents >= 25)
@@ -59,13 +63,12 @@ int calculate_quarters(int cents)
         quarters++;
         cents = cents - 25;
     }
-    return 0;
+    return quarters;
 }
 
-int calculate_dimes(int cents)
+int calculate_dimes(int cents) // Calculate the number of dimes to be given
 {
     // TODO
-    // Calculate the number of dimes to be given
     int dimes = 0;
 
     while (cents >= 10)
@@ -73,13 +76,12 @@ int calculate_dimes(int cents)
         dimes++;
         cents = cents - 10;
     }
-    return 0;
+    return dimes;
 }
 
-int calculate_nickels(int cents)
+int calculate_nickels(int cents) // Calculating nickels
 {
     // TODO
-    // Calculating nickels
     int nickels = 0;
 
     while (cents >= 5)
@@ -87,13 +89,12 @@ int calculate_nickels(int cents)
         nickels++;
         cents = cents - 5;
     }
-    return 0;
+    return nickels;
 }
 
-int calculate_pennies(int cents)
+int calculate_pennies(int cents) // Calculating pennies
 {
     // TODO
-    // Calculating pennies
     int pennies = 0;
 
     while (cents >= 1)
@@ -101,5 +102,5 @@ int calculate_pennies(int cents)
         pennies++;
         cents = cents - 1;
     }
-    return 0;
+    return pennies;
 }
