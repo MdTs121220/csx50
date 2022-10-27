@@ -3,8 +3,8 @@
 
 int main(void)
 {
-   // Input card number
-    long n = get_long("Number: ");
+
+    long n = get_long("Entry Number: "); // Prompt Input card number
 
     // Calculate the length
     int i = 0;
