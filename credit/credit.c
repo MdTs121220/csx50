@@ -1,3 +1,9 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//Cash.c
+//---------------------------------
 #include <cs50.h>
 #include <stdio.h>
 
@@ -32,16 +38,16 @@ int main(void)
     int modu2;
     do
     {
-        // Remove last digit
+        // Buang digit terakhir
         modu1 = x % 10;
         x = x / 10;
         jum1 = jum1 + modu1;
 
-        // Remove second last digit
+        // Remove digit kedua dari belakang
         modu2 = x % 10;
         x = x / 10;
 
-        // 2 times second last digit and add digits to sum2
+        // modulus dan jumlah digit-digit
         modu2 = modu2 * 2;
         d1 = modu2 % 10;
         d2 = modu2 / 10;
@@ -50,21 +56,21 @@ int main(void)
     while (x > 0);
     total = jum1 + jum2;
 
-    if (total % 10 != 0) // Checking
+    if (total % 10 != 0) // Checking digit
     {
         printf("INVALID\n");
         return 0;
     }
-    // Starting digits
-    long start = n;
+
+    long start = n; // Digit pertama dimulai
     do
     {
         start = start / 10;
     }
     while (start > 100);
 
-    // Checking starting digits for the card type
-    if ((start / 10 == 5) && (0 < start % 10 && start % 10 < 6))
+
+    if ((start / 10 == 5) && (0 < start % 10 && start % 10 < 6)) // Checking digit dan jenis kartu
     {
         printf("MASTERCARD\n");
     }
@@ -81,3 +87,4 @@ int main(void)
         printf("INVALID\n");
     }
 }
+//------------END---------------------
