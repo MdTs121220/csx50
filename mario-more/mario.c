@@ -30,13 +30,13 @@ int main(void)
         }
 
 
-        for (int hashes = height + row + 1; hashes > height; hashes--) //right
+        for (int pagar = height + row + 1; pagar > height; pagar--) //right
         {
             printf("#");
         }
         printf("  ");
 
-        for (int hashes = height + row + 1; hashes > height; hashes--) //left
+        for (int pagar = height + row + 1; pagar > height; pagar--) //left
         {
             printf("#");
         }
