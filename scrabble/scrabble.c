@@ -38,6 +38,7 @@ int compute_score(string word)
     // TODO: Compute and return score for string
     int i;
     int score = 0;
+    int n;
     for (i = 0, n = strlen(word); i < n; i++)
     {
         if (word[i] > 64 && word[i] < 91) //upper case
