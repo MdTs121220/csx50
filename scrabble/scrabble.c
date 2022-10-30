@@ -42,6 +42,7 @@ int main(void)
 int compute_score(string word)
 {
     // TODO: Compute and return score for string
+    // Try to use ASCII
     int i;
     int score = 0;
     int n;
