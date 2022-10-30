@@ -1,3 +1,9 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//Scrabble.c
+//---------------------------------
 #include <ctype.h>
 #include <cs50.h>
 #include <stdio.h>
@@ -51,7 +57,7 @@ int compute_score(string word)
         }
         else
         {
-            score +=0;
+            score += 0;
         }
     }
     return score;
