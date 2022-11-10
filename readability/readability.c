@@ -16,13 +16,13 @@ int main(void)
     int count_word = 1;
     int count_sentence = 0;
 
-    string text = get_string("Text: ");
+    string text = get_string("Text: ");  //prompt input user
 
     int text_leng = strlen(text);
 
     for (int i = 0; i < text_leng; i++)
     {
-        if (isalpha(text[i]))
+        if (isalpha(text[i]))  //function to check alphabeth text
         {
             count_letter++;
         }
@@ -30,7 +30,7 @@ int main(void)
 
     for (int i = 0; i < text_leng; i++)
     {
-        if (isspace(text[i]))
+        if (isspace(text[i]))  //function to check space
         {
             count_word++;
         }
