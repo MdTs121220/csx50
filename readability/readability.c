@@ -44,7 +44,7 @@ int main(void)
         }
     }
 
-    float calcu = (0.00588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8;
+    float calcu = (0.0588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8;
     int index = round(calcu);
 
     if (index <1)
