@@ -20,7 +20,7 @@ int main(void)
 
     int text_leng = strlen(text);
 
-    for (int 1 = 0; i < text_leng; i++)
+    for (int i = 0; i < text_leng; i++)
     {
         if(isalpha(text[i]))
         {
