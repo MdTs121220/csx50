@@ -22,7 +22,34 @@ int main(void)
 
     for (int 1 = 0; i < text_leng; i++)
     {
-        if(isalpha)
+        if(isalpha(text[i]))
+        {
+            count_letter++;
+        }
+    }
+
+    for (int i = 0; i < text_leng; i++)
+    {
+        if (isspace(text[i]))
+        {
+            count_word++;
+        }
+    }
+
+    for (int i = 0;  < text_leng; i++)
+    {
+        if (text[i] == '.' || text[i] == '?' || text[i] == '!')
+        {
+            count_sentence++;
+        }
+    }
+
+    float calcu = (0.00588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8;
+    int index = round(calc);
+
+    if (index <1)
+    {
+        printf("Before Grade 1\n");
     }
 
 
