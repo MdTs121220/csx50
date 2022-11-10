@@ -22,7 +22,7 @@ int main(void)
 
     for (int 1 = 0; i < text_leng; i++)
     {
-        if()
+        if(isalpha)
     }
 
 
