@@ -22,7 +22,7 @@ int main(void)
 
     for (int i = 0; i < text_leng; i++)
     {
-        if(isalpha(text[i]))
+        if (isalpha(text[i]))
         {
             count_letter++;
         }
@@ -47,7 +47,7 @@ int main(void)
     float calcu = (0.0588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8;
     int index = round(calcu);
 
-    if (index <1)
+    if (index < 1)
     {
         printf("Before Grade 1\n");
     }
