@@ -38,7 +38,7 @@ int main(void)
 
     for (int i = 0;  i < text_leng; i++)
     {
-        if (text[i] == '.' || text[i] == '?' || text[i] == '!')
+        if (text[i] == '.' || text[i] == '?' || text[i] == '!') //to check character
         {
             count_sentence++;
         }
