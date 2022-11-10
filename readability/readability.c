@@ -44,6 +44,7 @@ int main(void)
         }
     }
 
+    //Coleman-Liau index Formula
     float calcu = (0.0588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8;
     int index = round(calcu);
 
