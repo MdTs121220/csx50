@@ -36,7 +36,7 @@ int main(void)
         }
     }
 
-    for (int i = 0;  < text_leng; i++)
+    for (int i = 0;  i < text_leng; i++)
     {
         if (text[i] == '.' || text[i] == '?' || text[i] == '!')
         {
@@ -45,7 +45,7 @@ int main(void)
     }
 
     float calcu = (0.00588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8;
-    int index = round(calc);
+    int index = round(calcu);
 
     if (index <1)
     {
