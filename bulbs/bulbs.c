@@ -9,7 +9,10 @@ void print_bulb(int bit);
 int main(void)
 {
     // TODO
-    
+    string text = get_string("Message: ");  //prompt input user
+
+    int text_leng = strlen(text);
+
 }
 
 void print_bulb(int bit)
