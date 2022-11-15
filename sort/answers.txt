@@ -8,4 +8,4 @@ How do you know?: When I do the Sort2 test it takes the fastest time when I try 
 
 sort3 uses: Selection Sort
 
-How do you know?: TODO
+How do you know?: Sort3 is the last choice as I've found 2 answers from sort so I believe sort3 is the sort of choice. I did a test using process sort, the selection sort still has to go through each element n^2 times and still makes comparisons, making it slower than bubble sort and merge sort.
