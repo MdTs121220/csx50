@@ -1,6 +1,6 @@
 sort1 uses: Bubble Sort
 
-How do you know?: I just try
+How do you know?: I tried to do a test using the data sorted list 50000.txt, the result is that sort1 has the fastest real time compared to sort2 and sort3. This sort1 has the fastest time when running against already sorted data. and making it better than sort2 and sort3 since in the best case scenario, bubble sort is omega.
 
 sort2 uses: Merge Sort
 
