@@ -4,7 +4,7 @@ How do you know?: I tried to do a test using the data sorted list 50000.txt, the
 
 sort2 uses: Merge Sort
 
-How do you know?: TODO
+How do you know?: When I do the Sort2 test it takes the fastest time when I try to do the test using an unsorted list (random.txt), and according to the theory I learned from the CS50 video, that Merge sort's best case is omega (n log n) and worst case is O (n log n).
 
 sort3 uses: Selection Sort
 
