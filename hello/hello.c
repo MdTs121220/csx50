@@ -9,7 +9,5 @@
 
 int main(void)
 {
-    string name = get_string("What is your name: "); //deklarasi variable string
-
-    printf("hello, %s\n", name); //output print
+    
 }
