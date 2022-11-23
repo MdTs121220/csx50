@@ -144,7 +144,7 @@ bool vote(int voter, int rank, string name)
             printf("rank: %d\n", rank);
             return true;
         }
-        }
+    }
     return false;
 }
 
