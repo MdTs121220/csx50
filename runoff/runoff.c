@@ -135,10 +135,9 @@ int main(int argc, string argv[])
 bool vote(int voter, int rank, string name)
 {
     //try to update 2d array to indicate the voter have their rank
-
-    for(int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
-        if(strcmp(name, candidates[i].name)==0)
+        if (strcmp(name, candidates[i].name) == 0)
         {
             preferences[voter][rank] = i;
             printf("voter: %d\n", voter);
@@ -153,12 +152,12 @@ bool vote(int voter, int rank, string name)
 void tabulate(void)
 {
     //to loop tabulate
-    for(int voter = 0; voter<voter_count; voter++)
+    for (int voter = 0; voter < voter_count; voter++)
     {
-        for(int ranks = 0; ranks < candidate_count; ranks++)
+        for (int ranks = 0; ranks < candidate_count; ranks++)
         {
             int c = preferences[voter][ranks];
-            if(!candidates[c].eliminated)
+            if (!candidates[c].eliminated)
             {
                 candidates[c].votes++;
                 break;
@@ -171,7 +170,7 @@ void tabulate(void)
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-    //todo
+    //check that by comparing each candidate’s vote count against the voter_count divided by 2
     for (int c = 0; c < candidate_count; c++)
     {
         if (candidates[c].votes > (voter_count / 2))
@@ -186,13 +185,13 @@ bool print_winner(void)
 // Return the minimum number of votes any remaining candidate has
 int find_min(void)
 {
-    //todo
+    //find_min to check between all candidates what’s the least number of votes
     {
-    int voteCount = voter_count;
-    for (int c = 0; c < candidate_count; c++)
-    {
-        if (candidates[c].votes < voteCount && candidates[c].eliminated == false)
+        int voteCount = voter_count;
+        for (int c = 0; c < candidate_count; c++)
         {
+            if (candidates[c].votes < voteCount && candidates[c].eliminated == false)
+            {
             voteCount = candidates[c].votes;
         }
     }
@@ -203,9 +202,11 @@ int find_min(void)
 // Return true if the election is tied between all candidates, false otherwise
 bool is_tie(int min)
 {
+    // check if the election has come to a tie
     int tieCount = 0;
     int onRun = 0;
-for (int c = 0; c < candidate_count; c++)
+
+    for (int c = 0; c < candidate_count; c++)
     {
         if (candidates[c].eliminated == false && candidates[c].votes == min)
         {
@@ -227,7 +228,7 @@ for (int c = 0; c < candidate_count; c++)
 // Eliminate the candidate (or candidates) in last place
 void eliminate(int min)
 {
-    //todo
+    //eliminate function
     for (int c = 0; c < candidate_count; c++)
     {
         if (candidates[c].eliminated == false && candidates[c].votes == min)
