@@ -164,14 +164,21 @@ void tabulate(void)
             }
         }
     }
-}
     return;
 }
 
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-    // TODO
+    //todo
+    for (int c = 0; c < candidate_count; c++)
+    {
+        if (candidates[c].votes > (voter_count / 2))
+        {
+            printf("%s\n", candidates[c].name);
+            return true;
+        }
+    }
     return false;
 }
 
