@@ -187,38 +187,39 @@ bool print_winner(void)
 int find_min(void)
 {
     //todo
-    int smallest[] = {voter_count,1};
-    for(int i = 0; i < candidate_count; i++ )
     {
-        if(smallest[0] > candidates[i].votes && !candidates[i].eliminated)
+    int voteCount = voter_count;
+    for (int c = 0; c < candidate_count; c++)
+    {
+        if (candidates[c].votes < voteCount && candidates[c].eliminated == false)
         {
-            smallest[0] = candidates[i].votes;
+            voteCount = candidates[c].votes;
         }
     }
-    return 0;
+    return voteCount;
+}
 }
 
 // Return true if the election is tied between all candidates, false otherwise
 bool is_tie(int min)
 {
-    //todo
     int tieCount = 0;
     int onRun = 0;
-    for(int c = 0; c < candidate_count; c++)
+for (int c = 0; c < candidate_count; c++)
     {
         if (candidates[c].eliminated == false && candidates[c].votes == min)
         {
             tieCount++;
             onRun++;
         }
-        else if(candidates[c].eliminated == false)
+        else if (candidates[c].eliminated == false)
         {
             onRun++;
         }
-        if(tieCount == onRun)
-        {
-            return true;
-        }
+    }
+    if (tieCount == onRun)
+    {
+        return true;
     }
     return false;
 }
@@ -227,13 +228,11 @@ bool is_tie(int min)
 void eliminate(int min)
 {
     //todo
-    for(int c = 0; c < candidate_count; c++)
+    for (int c = 0; c < candidate_count; c++)
     {
-        if(candidates[c].votes == min)
+        if (candidates[c].eliminated == false && candidates[c].votes == min)
         {
-
             candidates[c].eliminated = true;
         }
     }
-    return;
 }
