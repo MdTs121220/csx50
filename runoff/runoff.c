@@ -133,7 +133,18 @@ int main(int argc, string argv[])
 // Record preference if vote is valid
 bool vote(int voter, int rank, string name)
 {
-    // TODO
+    //try to update 2d array to indicate the voter have their rank
+
+    for(int i = 0; i < candidate_count; i++)
+    {
+        if(strcmp(name, candidates[i].name)==0)
+        {
+            preferences[voter][rank] = i;
+            printf("voter: %d\n", voter);
+            printf("rank: %d\n", rank);
+            return true;
+        }
+  }
     return false;
 }
 
