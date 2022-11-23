@@ -144,7 +144,7 @@ bool vote(int voter, int rank, string name)
             printf("rank: %d\n", rank);
             return true;
         }
-  }
+        }
     return false;
 }
 
@@ -192,13 +192,12 @@ int find_min(void)
         {
             if (candidates[c].votes < voteCount && candidates[c].eliminated == false)
             {
-            voteCount = candidates[c].votes;
+                voteCount = candidates[c].votes;
+            }
         }
+        return voteCount;
     }
-    return voteCount;
 }
-}
-
 // Return true if the election is tied between all candidates, false otherwise
 bool is_tie(int min)
 {
