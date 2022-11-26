@@ -6,6 +6,7 @@
 //---------------------------------
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 // Max number of candidates
 #define MAX 9
@@ -200,13 +201,36 @@ bool cycle(int end, int cycle_start)
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // Todo
+    //loop via pair
+    for (int i = 0; i < pair_count; i++)
+    {
+        // lock pair if return false
+        if (!cycle(pairs[i].loser, pairs[i].winner))
+        {
+            locked[pairs[i].winner][pairs[i].loser] = true;
+        }
+    }
     return;
 }
 
 // Print the winner of the election
 void print_winner(void)
 {
-    // TODO
+    // printed winner
+    for (int i = 0; i < candidate_count; i++)
+    {
+        int false_count = 0;
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (locked[j][i] == false)
+            {
+                false_count++;
+                if (false_count == candidate_count)
+                {
+                    printf("%s\n", candidates[i]);
+                }
+            }
+        }
+    }
     return;
 }
