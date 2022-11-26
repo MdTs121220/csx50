@@ -107,14 +107,14 @@ int main(int argc, string argv[])
 bool vote(int rank, string name, int ranks[])
 {
     // try to loop and update ranks
-    for(int i = 0; i < candidate_count; i++)
-  {
-     if(strcmp (candidates[i], name) == 0)
-     {
-       ranks[rank] = i;
-       return true;
-      }
-  }
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (strcmp(candidates[i], name) == 0)
+        {
+            ranks[rank] = i;
+            return true;
+        }
+    }
     return false;
 }
 
@@ -122,13 +122,13 @@ bool vote(int rank, string name, int ranks[])
 void record_preferences(int ranks[])
 {
     //check voter rank
-    for(int i = 0; i < candidate_count; i++)
-  {
-  for(int j = i + 1; j < candidate_count; j++)
-  {
-    preferences[ranks[i]][ranks[j]] ++; // update number voters add one by one until the loop is finished to chek i variable
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            preferences[ranks[i]][ranks[j]] ++; // update number voters add one by one until the loop is finished to chek i variable
+        }
     }
-  }
     return;
 }
 
@@ -136,17 +136,17 @@ void record_preferences(int ranks[])
 void add_pairs(void)
 {
     // record pairs candidate to array
-    for(int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
-        for(int j = i + 1; j < candidate_count; j++)
+        for (int j = i + 1; j < candidate_count; j++)
         {
-            if(preferences[i][j] > preferences[j][i])
+            if (preferences[i][j] > preferences[j][i])
             {
                 pairs[pair_count].winner = i;
                 pairs[pair_count].loser = j;
                 pair_count ++;
             }
-            else if(preferences[i][j] < preferences[j][i])
+            else if (preferences[i][j] < preferences[j][i])
             {
                 pairs[pair_count].winner = j;
                 pairs[pair_count].loser = i;
@@ -161,11 +161,11 @@ void add_pairs(void)
 void sort_pairs(void)
 {
     // try to count prefer winner and losser and sorting
-    for(int i = pair_count - 1; i >= 0; i--)
+    for (int i = pair_count - 1; i >= 0; i--)
     {
-        for(int j = 0; j <= i; j++)
+        for (int j = 0; j <= i; j++)
         {
-            if((preferences[pairs[j].winner][pairs[j].loser]) < (preferences[pairs[j + 1].winner][pairs[j+1].loser]))
+            if ((preferences[pairs[j].winner][pairs[j].loser]) < (preferences[pairs[j + 1].winner][pairs[j+1].loser]))
             {
                 pair temp = pairs[j];
                 pairs[j] = pairs[j + 1];
