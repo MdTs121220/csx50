@@ -123,9 +123,9 @@ void record_preferences(int ranks[])
     //check voter rank
     for(int i = 0; i < candidate_count; i++)
   {
-  for(int j = i+1; j < candidate_count; j++)
+  for(int j = i + 1; j < candidate_count; j++)
   {
-    preferences[ranks[i]][ranks[j]] ++; // add one by one until the loop is finished to chek i variable
+    preferences[ranks[i]][ranks[j]] ++; // update number voters add one by one until the loop is finished to chek i variable
     }
   }
     return;
