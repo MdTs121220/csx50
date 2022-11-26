@@ -128,8 +128,8 @@ void record_preferences(int ranks[])
         {
             preferences[ranks[i]][ranks[j]] ++; // update number voters add one by one until the loop is finished to chek i variable
         }
-        }
-        return;
+    }
+    return;
 }
 
 // Record pairs of candidates where one is preferred over the other
