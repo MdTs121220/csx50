@@ -106,11 +106,11 @@ int main(int argc, string argv[])
 bool vote(int rank, string name, int ranks[])
 {
     // try to loop and update ranks
-    for(int c = 0; c < candidate_count; c++)
+    for(int i = 0; i < candidate_count; i++)
   {
-     if(strcmp(candidates[c], name)==0)
+     if(strcmp(candidates[i], name) == 0)
      {
-       ranks[rank]=c;
+       ranks[rank] = i;
        return true;
       }
   }
@@ -120,6 +120,7 @@ bool vote(int rank, string name, int ranks[])
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
+    //check voter rank
     for(int i = 0; i < candidate_count; i++)
   {
   for(int j = i+1; j < candidate_count; j++)
