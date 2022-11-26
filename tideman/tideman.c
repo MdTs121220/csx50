@@ -175,10 +175,32 @@ void sort_pairs(void)
     return;
 }
 
+//Try recursive case loops here with create cycles
+bool cycle(int end, int cycle_start)
+{
+    // Return true if there is a cycle created (Recursion base case)
+    if (end == cycle_start)
+    {
+        return true;
+    }
+    // loop recursive case here
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (locked[end][i])
+        {
+            if (cycle(i, cycle_start))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // TODO
+    // Todo
     return;
 }
 
