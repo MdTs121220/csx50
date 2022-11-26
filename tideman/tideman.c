@@ -216,8 +216,7 @@ void lock_pairs(void)
 // Print the winner of the election
 void print_winner(void)
 {
-    // printed winner
-    for (int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++)  // printed winner
     {
         int false_count = 0;
         for (int j = 0; j < candidate_count; j++)
