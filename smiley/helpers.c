@@ -1,3 +1,9 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//Helpers.c
+//---------------------------------
 #include "helpers.h"
 
 void colorize(int height, int width, RGBTRIPLE image[height][width])
