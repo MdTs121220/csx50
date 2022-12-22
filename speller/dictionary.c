@@ -63,8 +63,6 @@ unsigned int hash(const char *word)
 bool load(const char *dictionary)
 {
     // TODO
-   bool load(const char *dictionary)
-   {
     FILE *dict = fopen(dictionary, "r"); // initalize a pointer to our stream
     if (dict == NULL) // check for errors
     {
