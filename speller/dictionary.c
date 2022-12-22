@@ -43,22 +43,21 @@ bool load(const char *dictionary)
 {
     // TODO
    bool load(const char *dictionary)
-{
+   {
     FILE *dict = fopen(dictionary, "r"); // initalize a pointer to our stream
     if (dict == NULL) // check for errors
     {
         return false; // fail fast and return false; // fail fast and return false
-    }
+        }
 
-    char word[LENGTH + 1]; // create a buffer to hold our word
-
-    while (fscanf(dict, "%s", word) != EOF) // scan until we hit EOF
-    {
-        node *n = malloc(sizeof(node)); // allocate enough memory for a node
-
-        if (n == NULL) // failed allocation handling
+        char word[LENGTH + 1]; // create a buffer to hold our word
+        while (fscanf(dict, "%s", word) != EOF) // scan until we hit EOF
         {
-            return false;
+            node *n = malloc(sizeof(node)); // allocate enough memory for a node
+            if (n == NULL) // failed allocation handling
+            {
+                return false;
+                }
         }
 
         strcpy(n->word, word); // copy word to n's word property
