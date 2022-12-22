@@ -42,7 +42,37 @@ unsigned int hash(const char *word)
 bool load(const char *dictionary)
 {
     // TODO
-    return false;
+   bool load(const char *dictionary)
+{
+    FILE *dict = fopen(dictionary, "r"); // initalize a pointer to our stream
+    if (dict == NULL) // check for errors
+    {
+        return false; // fail fast and return false; // fail fast and return false
+    }
+
+    char word[LENGTH + 1]; // create a buffer to hold our word
+
+    while (fscanf(dict, "%s", word) != EOF) // scan until we hit EOF
+    {
+        node *n = malloc(sizeof(node)); // allocate enough memory for a node
+
+        if (n == NULL) // failed allocation handling
+        {
+            return false;
+        }
+
+        strcpy(n->word, word); // copy word to n's word property
+
+        int hash_value = hash(word); // recieve a hash value for word
+
+        n->next = table[hash_value]; // point node to the head of its bucket
+        table[hash_value] = n; // insert the new node
+        dict_size++; // increase globally declared dictionary word count
+    }
+
+    fclose(dict); // close stream
+
+    return true; // if we made it this far nothing went wrong!
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
