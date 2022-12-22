@@ -111,6 +111,18 @@ bool unload(void)
     for (int i = 0; i < N; i++) // iterate through buckets
     {
         node *p = table[i]; // initalize pointer at head of current bucket
+
+        while (p != NULL) // while there are nodes left in the bucket
+        {
+            node *tmp = p; // alias current node to temp
+            p = p->next; // move our pointer to the next node
+            free(tmp); // do the above to avoid leaking memory
+        }
+
+        if (p == NULL && i == N - 1) // check if the last node is null
+        {
+            return true; // everything was free'd successfully
+        }
     }
-    return false;
+    return false; // something went wrong
 }
