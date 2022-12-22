@@ -77,7 +77,6 @@ bool load(const char *dictionary)
             {
                 return false;
                 }
-                }
 
                 strcpy(n->word, word); // copy word to n's word property
                 int hash_value = hash(word); // recieve a hash value for word
