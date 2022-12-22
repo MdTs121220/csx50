@@ -5,6 +5,7 @@
 #include <stdio.h>  //new library
 #include <stdlib.h> //new library
 #include <ctype.h> //new library
+#include <strings.h> //new library
 
 
 #include "dictionary.h"
@@ -29,6 +30,9 @@ int dict_size = 0; //type dictionary size
 bool check(const char *word)
 {
     // TODO
+    int hash_value = hash(word); // get a hash for the word
+    node *p = table[hash_value]; // point at the head of word's bucket
+
     return false;
 }
 
