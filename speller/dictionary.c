@@ -1,12 +1,18 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//Speller.c
+//---------------------------------
 // Implements a dictionary's functionality
 
 #include <ctype.h>
 #include <stdbool.h>
-#include <stdio.h>  //new library
-#include <stdlib.h> //new library
-#include <ctype.h> //new library
-#include <string.h> //new library
-#include <strings.h> //new library
+#include <stdio.h>  //add new library
+#include <stdlib.h> //add new library
+#include <ctype.h> //add new library
+#include <string.h> //add new libraryy
+#include <strings.h> //add new library
 
 
 #include "dictionary.h"
@@ -34,30 +40,30 @@ bool check(const char *word)
     int hash_value = hash(word); // get a hash for the word
     node *p = table[hash_value]; // point at the head of word's bucket
 
-    while (p != NULL) // while there is more nodes to look at
+    while (p != NULL) // cek more words
     {
-        if (strcasecmp(word, p->word) == 0) // case insensitive string comparison
+        if (strcasecmp(word, p->word) == 0) // try compare case insensitive
         {
-            return true; // got a match
+            return true; // match
         }
 
-        p = p->next; // move to the next word in the bucket
+        p = p->next; // move to the next word
     }
-    return false; // if we made it here no matches were found
+    return false;
 }
 
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
     // TODO: Improve this hash function
-    /* djb2 by Dan Bernstring - adapted to be case insensitive */
-    unsigned long hash = 5381;
+    // try use djb2 by Dan Bernstring - adapted to be case insensitive
+    unsigned long hash = 5381; //number djb2
     int c;
-    while ((c = tolower(*word++))) // convert chars to lowercase
+    while ((c = tolower(*word++))) // convert to lowercase
     {
-        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+        hash = ((hash << 5) + hash) + c; // hash * 33 + c *
     }
-    return hash % N; // keep result within bounds of our table
+    return hash % N; // keep result in table
 }
 
 // Loads dictionary into memory, returning true if successful, else false
@@ -67,8 +73,8 @@ bool load(const char *dictionary)
     FILE *dict = fopen(dictionary, "r"); // initalize a pointer to our stream
     if (dict == NULL) // check for errors
     {
-        return false; // fail fast and return false; // fail fast and return false
-        }
+        return false; // fail fast and return false
+    }
 
         char word[LENGTH + 1]; // create a buffer to hold our word
         while (fscanf(dict, "%s", word) != EOF) // scan until we hit EOF
