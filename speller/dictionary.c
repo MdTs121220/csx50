@@ -33,7 +33,16 @@ bool check(const char *word)
     int hash_value = hash(word); // get a hash for the word
     node *p = table[hash_value]; // point at the head of word's bucket
 
-    return false;
+    while (p != NULL) // while there is more nodes to look at
+    {
+        if (strcasecmp(word, p->word) == 0) // case insensitive string comparison
+        {
+            return true; // got a match
+        }
+
+        p = p->next; // move to the next word in the bucket
+    }
+    return false; // if we made it here no matches were found
 }
 
 // Hashes word to a number
@@ -99,5 +108,9 @@ unsigned int size(void)
 bool unload(void)
 {
     // TODO
+    for (int i = 0; i < N; i++) // iterate through buckets
+    {
+        node *p = table[i]; // initalize pointer at head of current bucket
+    }
     return false;
 }
