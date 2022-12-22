@@ -39,28 +39,7 @@ unsigned int hash(const char *word)
 bool load(const char *dictionary)
 {
     // TODO
-FILE *dict_pointer = fopen(dictionary, "r"); //Open dictionary file
-if (dictionary == NULL) // Check if null
-{
-    printf("Unable to open %s\n", dictionary);
     return false;
-    }
-    char next_word[LENGTH + 1]; // Initialise word array
-    while (fscanf(dict_pointer, "%s", next_word) != EOF) // Read strings from file one at a time
-    {
-        node *n = malloc(sizeof(node)); // Create new node for each word
-        if (n == NULL)
-        {
-            return false;
-            }
-            strcpy(n->word, next_word); // copy word into node using strcopy
-            int hash_value = hash(next_word); // Hash word to obtain hash value
-            n->next = table[hash_value]; // Insert node into hash table at that location
-            table[hash_value] = n;
-            dict_size++;
-            }
-            fclose(dict_pointer); // Close file
-            return false;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
