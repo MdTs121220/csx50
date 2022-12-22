@@ -96,7 +96,7 @@ unsigned int size(void)
 {
     if (dict_size > 0) // if a dictionary is loaded
     {
-        return dict_size // return its size
+        return dict_size; // return its size
     }
 
     return 0; // default return if no dict is loaded
