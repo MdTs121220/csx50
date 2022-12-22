@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdio.h>  //new library
 #include <stdlib.h> //new library
+#include <ctype.h> //new library
 
 
 #include "dictionary.h"
@@ -35,7 +36,14 @@ bool check(const char *word)
 unsigned int hash(const char *word)
 {
     // TODO: Improve this hash function
-    return toupper(word[0]) - 'A';
+    /* djb2 by Dan Bernstring - adapted to be case insensitive */
+    unsigned long hash = 5381;
+    int c;
+    while ((c = tolower(*word++))) // convert chars to lowercase
+    {
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    }
+    return hash % N; // keep result within bounds of our table
 }
 
 // Loads dictionary into memory, returning true if successful, else false
@@ -75,8 +83,12 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    if (dict_size > 0) // if a dictionary is loaded
+    {
+        return dict_size // return its size
+    }
+
+    return 0; // default return if no dict is loaded
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
