@@ -6,6 +6,7 @@
 #include <stdlib.h> //new library
 #include <ctype.h> //new library
 #include <string.h> //new library
+#include <strings.h> //new library
 
 
 #include "dictionary.h"
