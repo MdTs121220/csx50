@@ -58,20 +58,18 @@ bool load(const char *dictionary)
             {
                 return false;
                 }
-        }
+                }
 
-        strcpy(n->word, word); // copy word to n's word property
+                strcpy(n->word, word); // copy word to n's word property
+                int hash_value = hash(word); // recieve a hash value for word
+                n->next = table[hash_value]; // point node to the head of its bucket
+                table[hash_value] = n; // insert the new node
+                dict_size++; // increase globally declared dictionary word count
+                }
 
-        int hash_value = hash(word); // recieve a hash value for word
+                fclose(dict); // close stream
 
-        n->next = table[hash_value]; // point node to the head of its bucket
-        table[hash_value] = n; // insert the new node
-        dict_size++; // increase globally declared dictionary word count
-    }
-
-    fclose(dict); // close stream
-
-    return true; // if we made it this far nothing went wrong!
+                return true; // if we made it this far nothing went wrong!
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
