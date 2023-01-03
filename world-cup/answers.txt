@@ -16,4 +16,4 @@ Increasing the number of simulations from 10 to 1000000 did not get results that
 Suppose you're charged a fee for each second of compute time your program uses.
 After how many simulations would you call the predictions "good enough"?:
 
-It seems like the predictions stabilized after about...
+Several times the simulation, but can not be said to be good enough.
