@@ -1,3 +1,9 @@
+# ---------------------------------
+# Markus Dwiyanto Tobi Sogen
+# CS50 for teachers
+# Indonesia
+# tournament.py
+# ---------------------------------
 # Simulate a sports tournament
 
 import csv
@@ -69,3 +75,4 @@ def simulate_tournament(teams):
 
 if __name__ == "__main__":
     main()
+# some code from staff solution
