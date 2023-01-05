@@ -11,4 +11,4 @@ for row in range(height):
         print(" ", end="")
     for hash in range(row + 1): # try make hash
         print("#", end ="")
-        print("\n", end ="")
+    print("\n", end ="")
