@@ -7,7 +7,7 @@ while True:
     changeowed = get_float("Change owed: ")
     if changeowed > 0:
         break
-cent = round(change * 100)
+cent = round(changeowed * 100)
 while cent >= 25:
     cent = cent - 25
     count += 1
@@ -24,5 +24,7 @@ while cent >= 1:
     cent = cent - 1
     count += 1
 
+# print number count
+print(count)
 
 
