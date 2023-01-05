@@ -11,7 +11,7 @@ while True: #cek if user input number true or false
     # try check number input from user
     if height > 0 and height < 9:
         break
-#row
+# row
 for row in range(height):
     for space in range(height - row -1, 0, -1): # try make space
         print(" ", end="")
