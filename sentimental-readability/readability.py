@@ -11,16 +11,16 @@ textl = len(text)
 
 # cek number of letters in text
 for i in range(textl):
-    if(text[i].isalpha()):
-        count_letter +=1
+    if text[i].isalpha():
+        count_letter += 1
 
 # try cek number of words in text input
-    if(text[i].isspace()):
-        count_word +=1
+    if text[i].isspace():
+        count_word += 1
 
 # try cek number of sentence
-    if(text[i] == ',' or text[i] == '?' or text[i] == '!'):
-        count_sentence +=1
+    if text[i] == ',' or text[i] == '?' or text[i] == '!' :
+        count_sentence += 1
 
 # Coleman-Liau index Formula
 calcu = (0.0588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8
