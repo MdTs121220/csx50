@@ -1,16 +1,15 @@
 # TODO
 from cs50 import get_string
 
+# Get input from user
+text = get_string("Text: ")
+
 count_letter = 0
 count_word = 1
 count_sentence = 0
 
-# Get input from user
-text = get_string("Text: ")
-textl = len(text)
-
 # cek number of letters in text
-for i in range(textl):
+for i in range(len(text)):
     if text[i].isalpha():
         count_letter += 1
 # try cek number of words in text input
