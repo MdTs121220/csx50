@@ -8,3 +8,9 @@ while True:
     if changeowed > 0:
         break
 cent = round(change * 100)
+while cent >= 25:
+    cent = cent - 25
+    count += 1
+
+
+
