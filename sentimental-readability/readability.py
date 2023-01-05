@@ -7,10 +7,10 @@ count_sentence = 0
 
 # Get input from user
 text = get_string("Text: ")
-text_lenght = len(text)
+text_length = len(text)
 
 # cek number of letters in text
-for i in range(text_lenght):
+for i in range(text_length):
     if(text[i].isalpha()):
         count_letter+= 1
 
