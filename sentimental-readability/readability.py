@@ -24,9 +24,9 @@ for i in range(textl):
 calcu = (0.0588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8
 index = round(calcu)
 
-if index < 1:
-    print("Before Grade 1")
-elif index > 16:
+if index > 16:
     print("Grade 16+")
-else:
+elif index > 1 and index < 17:
     print(f"Grade {index}")
+else:
+    print("Before Grade 1")
