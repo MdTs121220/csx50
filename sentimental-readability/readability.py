@@ -24,7 +24,6 @@ for i in range(text_lenght):
 
 # Coleman-Liau index Formula
 calcu = (0.0588 * count_letter / count_word * 100) - (0.296 * count_sentence / count_word * 100) - 15.8
-
 index = round(calcu)
 
 if index < 1:
