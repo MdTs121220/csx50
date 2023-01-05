@@ -1,3 +1,9 @@
+# ---------------------------------
+# Markus Dwiyanto Tobi Sogen
+# CS50 for teachers
+# Indonesia
+# readability.py
+# ---------------------------------
 # TODO
 from cs50 import get_string
 
