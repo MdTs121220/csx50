@@ -1,3 +1,9 @@
+# ---------------------------------
+# Markus Dwiyanto Tobi Sogen
+# CS50 for teachers
+# Indonesia
+# mario-less.py
+# ---------------------------------
 # TODO
 from cs50 import get_int
 while True: #cek if user input number true or false
