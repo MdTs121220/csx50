@@ -26,7 +26,7 @@ def main():
     STR = list(dna_database[0].keys())[1:]
     STR_match ={}
     for i in range(len(dna_database)):
-        STR_match[STR[i]] = longest_match(sequence, STR[i])
+        STR_match[STR[i]] = longest_match(sequence,STR[i])
 
     # TODO: Check database for matching profiles
     for i in range(len(dna_database)):
