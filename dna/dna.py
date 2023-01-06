@@ -20,19 +20,19 @@ def main():
 
     # TODO: Read DNA sequence file into a variable
     with open(sys.argv[2], "r") as dna_data_file:
-        sequence = dna_data_file.read()
+        dna_sequence = dna_data_file.read()
 
     # TODO: Find longest match of each STR in DNA sequence
-    STR = list(dna_database[0].keys())[1:]
+    subsequences = list(dna_database[0].keys())[1:]
     STR_match ={}
-    for i in range(len(dna_database)):
-        STR_match[STR[i]] = longest_match(sequence,STR[i])
+    for subsequence in subsequences:
+        STR_match[subsequence] = longest_match(dna_sequence,subsequence)
 
     # TODO: Check database for matching profiles
-    for i in range(len(dna_database)):
+    for person in dna_database:
         matches = 0
-        for j in range(len(STR)):
-            if int(STR_match[STR[j]]) == int(dna_database[i][STR[j]]):
+        for subsequence in subsequences:
+            if int(person[subsequence]) == int(dna_database[i][STR[j]]):
                 matches += 1
                 if matches == len(STR):
                     print(dna_database[i]['name'])
