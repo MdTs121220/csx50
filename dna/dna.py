@@ -9,14 +9,12 @@ def main():
         print("Usage: python dna.py data.csv sequence.txt")
         sys.exit(1)
 
-
     # TODO: Read database file into a variable
-    dna_database =[]
+    dna_database = []
     with open(sys.argv[1], "r") as dna_data_file:
         reader = csv.DictReader(dna_data_file)
         for row in reader:
             dna_database.append(row)
-
 
     # TODO: Read DNA sequence file into a variable
     with open(sys.argv[2], "r") as dna_data_file:
@@ -24,9 +22,9 @@ def main():
 
     # TODO: Find longest match of each STR in DNA sequence
     subsequences = list(dna_database[0].keys())[1:]
-    result ={}
+    result = {}
     for subsequence in subsequences:
-        result[subsequence] = longest_match(dna_sequence,subsequence)
+        result[subsequence] = longest_match(dna_sequence, subsequence)
 
     # TODO: Check database for matching profiles
     for person in dna_database:
@@ -37,8 +35,8 @@ def main():
 
     # cek match
         if matches == len(subsequences):
-                    print(person["name"])
-                    sys.exit(0)
+            print(person["name"])
+            sys.exit(0)
 
     print("No Match")
 
