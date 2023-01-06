@@ -1,3 +1,9 @@
+# ---------------------------------
+# Markus Dwiyanto Tobi Sogen
+# CS50 for teachers
+# Indonesia
+# dna.py
+# ---------------------------------
 import csv
 import sys
 
