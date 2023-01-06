@@ -24,18 +24,20 @@ def main():
 
     # TODO: Find longest match of each STR in DNA sequence
     subsequences = list(dna_database[0].keys())[1:]
-    STR_match ={}
+    result ={}
     for subsequence in subsequences:
-        STR_match[subsequence] = longest_match(dna_sequence,subsequence)
+        result[subsequence] = longest_match(dna_sequence,subsequence)
 
     # TODO: Check database for matching profiles
     for person in dna_database:
         matches = 0
         for subsequence in subsequences:
-            if int(person[subsequence]) == int(dna_database[i][STR[j]]):
+            if int(person[subsequence]) == result[subsequence]:
                 matches += 1
-                if matches == len(STR):
-                    print(dna_database[i]['name'])
+
+    # cek match
+        if matches == len(subsequences):
+                    print(person["name"])
                     sys.exit(0)
 
     print("No Match")
