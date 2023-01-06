@@ -26,13 +26,13 @@ def main():
     STR = list(dna_database[0].keys())[1:]
     STR_match ={}
     for i in range(len(dna_database)):
-        STR_match[STR[i]] = longest_match(sequence,STR[i])
+        STR_match[STR[i]] = longest_match(sequence, STR[i])
 
     # TODO: Check database for matching profiles
-    for person in dna_database:
+    for i in range(len(dna_database)):
         matches = 0
-        for sub_str in STR:
-            if STR_match[sub_str] == int(person[sub_str]):
+        for j in range(len(STR)):
+            if int(STR_match[STR[j]]) == int(dna_database[i][STR[j]]):
                 matches += 1
                 if matches == len(STR):
                     print(dna_database[i]['name'])
