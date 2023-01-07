@@ -14,12 +14,12 @@ while True:
         break
 
 for i in range(height):
-    # Print left side
+    # Print the left-hand pyramid
     for j in range(i + 1):
         print("#", end="")
-        # Print space
-        print("  ", end="")
-# Print right side
-        for j in range(i + 1):
-            print("#", end="")
-            print()
+    # Print the space in between the pyramids
+    print("  ", end="")
+    # Print the right-hand pyramid
+    for j in range(i + 1):
+        print("#", end="")
+    print()
