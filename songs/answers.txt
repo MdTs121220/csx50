@@ -4,5 +4,4 @@ If songs.db contains the top 100 songs of one listener from 2018, how would you 
 How to determine audio aura by looking at the average energy, valence, and danceability of someone's top 100 songs from last 2018.
 
 Hypothesize about why the way you’ve calculated this aura might not be very representative of the listener. What better ways of calculating this aura would you propose?
-
-
+My assumption is that other than looking at the energy, valence, and danceability averages of someone's top 100 songs from the previous year, this can't necessarily be a benchmark, if the listener only listens for just a moment. Apart from that, you can also see from the average amount of time you listen to a song, whether the song you listen to is longer or not.
