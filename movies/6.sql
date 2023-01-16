@@ -2,5 +2,9 @@
 -- Markus Dwiyanto Tobi Sogen
 -- CS50 for teachers
 -- Indonesia
--- query to list the titles and release years of all Harry Potter movies, in chronological order
+-- query to determine the average rating of all movies released in 2012
 ----------------------------------
+
+select avg(rating) from ratings
+join movies on movies.id=ratings.movie_id
+where movies.year=2012;
