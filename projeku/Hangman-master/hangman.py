@@ -48,7 +48,7 @@ def redraw_game_window():
     label1 = guess_font.render(spaced, 1, BLACK)
     rect = label1.get_rect()
     length = rect[2]
-    
+
     win.blit(label1,(winWidth/2 - length/2, 400))
 
     pic = hangmanPics[limbs]
@@ -85,7 +85,7 @@ def spacedOut(word, guessed=[]):
         elif word[x] == ' ':
             spacedWord += ' '
     return spacedWord
-            
+
 
 def buttonHit(x, y):
     for i in range(len(buttons)):
