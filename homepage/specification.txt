@@ -1,3 +1,4 @@
+A. lists the 10 HTML tags :
 1. <!DOCTYPE html>
 2. <html>
 3. <body>
@@ -6,3 +7,7 @@
 6. <p>
 7. style
 8. <div>
+9. <li>
+10. <img>
+
+B. 
