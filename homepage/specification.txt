@@ -10,4 +10,4 @@ A. lists the 10 HTML tags :
 9. <li>
 10. <img>
 
-B. 
+B. Bootstrap handles image display and responsiveness using predefined HTML and CSS rules and javascript makes the web more dynamic and interactive.
