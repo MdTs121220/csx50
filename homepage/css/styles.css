@@ -17,22 +17,22 @@
     background: whitesmoke;
 }
 
-.site-main .site-banner .site-title h3{
-    padding-top: 35%;
+.site-main .site-banner .site-title h4{
+    padding-top: 2%;
     font-weight: 500;
 }
 
-.site-main .site-banner .site-title h3::after{
+.site-main .site-banner .site-title h4::after{
     content: " ";
     height: 2px;
-    width: 18vw;
+    width: 12vw;
     background: black;
     display: inline-block;
     margin-left: 5%;
     transform: translateY(-10px);
 }
 
-.site-main .site-banner .site-title h1{
+.site-main .site-banner .site-title h4{
     font-size: 5rem;
 }
 
