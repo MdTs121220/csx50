@@ -17,7 +17,7 @@ body {
     width: 90%;
 }
 
-.header {
+.jumbotron {
     background-color: #477bff;
     color: #fff;
     margin-bottom: 2rem;
@@ -80,4 +80,3 @@ table td {
 tbody tr:nth-of-type(odd) {
     background-color: rgb(179, 208, 255, 0.3)
 }
-
