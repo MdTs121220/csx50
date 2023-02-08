@@ -114,9 +114,46 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
+##block route register
 
-    if request.method == "GET":
+    #Use POST Method to get username and password
+    if request.method == "POST":
+
+        #Submit username and to be sure username not empty
+        if not request.form.get("username"):
+            return apology("must provide username")
+
+        #Submit password and to be sure password not empty
+        elif not request.form.get("password"):
+            return apology("must provide password")
+
+        #Submit confirmation is clicked by user
+        elif not request.form.get("confirmation"):
+            return apology("must provide password confirmation")
+
+        #To check confirmation password not empty
+        elif request.form.get("password") != request.form.get("confirmation"):
+            return apology("password dont match")
+        try:
+            # Add into db
+            new_user = db.execute("INSERT INTO users (username, hash) VALUES (?,?)", request.form.get("username"), generate_password_hash(request.form.get("password")))
+
+        except:
+            # Check if its unique
+            return apology("username is already registered")
+
+        # Remember the user
+        session["user_id"] = new_user
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
         return render_template("register.html")
+
+##endblock route register
+
 
 
 @app.route("/sell", methods=["GET", "POST"])
