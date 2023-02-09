@@ -121,15 +121,15 @@ def register():
 
         #Submit username and to be sure username not empty
         if not request.form.get("username"):
-            return apology("must provide username")
+            return apology("You must provide username")
 
         #Submit password and to be sure password not empty
         elif not request.form.get("password"):
-            return apology("must provide password")
+            return apology("You must provide password")
 
         #Submit confirmation is clicked by user
         elif not request.form.get("confirmation"):
-            return apology("must provide password confirmation")
+            return apology("You must provide password confirmation")
 
         #To check confirmation password not empty
         elif request.form.get("password") != request.form.get("confirmation"):
