@@ -116,39 +116,38 @@ def register():
     """Register user"""
 ##block route register
 
-    #Use POST Method to get username and password
-    if request.method == "GET":
+    if request.method == "POST":
 
-        #Submit username and to be sure username not empty
-        if not request.form.get("username"):
-            return apology("You must provide username")
+        if not (username := request.form.get("username")):
+            return apology("MISSING USERNAME")
 
-        #Submit password and to be sure password not empty
-        elif not request.form.get("password"):
-            return apology("You must provide password")
+        if not (password := request.form.get("password")):
+            return apology("MISSING PASSWORD")
 
-        #Submit confirmation is clicked by user
-        elif not request.form.get("confirmation"):
-            return apology("You must provide password confirmation")
+        if not (confirmation := request.form.get("confirmation")):
+            return apology("PASSWORD DON'T MATCH")
 
-        #To check confirmation password not empty
-        elif request.form.get("password") != request.form.get("confirmation"):
-            return apology("password dont match")
-        try:
-            # Add into db
-            new_user = db.execute("INSERT INTO users (username, hash) VALUES (?,?)", request.form.get("username"), generate_password_hash(request.form.get("password")))
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = ?;", username)
 
-        except:
-            # Check if its unique
-            return apology("username is already registered")
+        # Ensure username not in database
+        if len(rows) != 0:
+            return apology(f"The username '{username}' already exists. Please choose another name.")
 
-        # Remember the user
-        session["user_id"] = new_user
+        # Ensure first password and second password are matched
+        if password != confirmation:
+            return apology("password not matched")
 
-        # Redirect user to home page
+        # Insert username into database
+        id = db.execute("INSERT INTO users (username, hash) VALUES (?, ?);",
+                        username, generate_password_hash(password))
+
+        # Remember which user has logged in
+        session["user_id"] = id
+
+        flash("Registered!")
+
         return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("register.html")
 
