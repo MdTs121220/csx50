@@ -115,49 +115,41 @@ def quote():
 def register():
     """Register user"""
 ##block route register
-    if request.method == "GET":
-        return render_template("register.html")
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username")
+
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password")
+
+        # Ensure password was submitted
+        elif not request.form.get("confirmation"):
+            return apology("must provide password confirmation")
+
+        # Ensure confirmation password is equal to password
+        elif request.form.get("password") != request.form.get("confirmation"):
+            return apology("password dont match")
+        try:
+            # Add into db
+            new_user = db.execute("INSERT INTO users (username, hash) VALUES (?,?)", request.form.get("username"), generate_password_hash(request.form.get("password")))
+
+        except:
+            # Check if its unique
+            return apology("username is already registered")
+
+        # Remember the user
+        session["user_id"] = new_user
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
     else:
-        username = request.form.get("username")
-        password1 = request.form.get("password")
-        password2 = request.form.get("confirmation")
-
-        special_symbols = ['!', '#', '$', '%', '.', '_', '&']
-
-        if not username:
-            return render_template("apology.html", message="You must provide a username.")
-
-        if not password1:
-            return render_template("apology.html", message="You must provide a password.")
-
-        if not password2:
-            return render_template("apology.html", message="You must confirm your password.")
-
-        if len(password1) < 8:
-            return render_template("apology.html", message="Your password must contain 8 or more characters.")
-
-        if not any(char.isdigit() for char in password1):
-            return render_template("apology.html", message="Your password must contain at least 1 number.")
-
-        if not any(char.isupper() for char in password1):
-            return render_template("apology.html", message="Your password must contain at least uppercase letter.")
-
-        if not any(char in special_symbols for char in password1):
-            return render_template("apology.html", message="Your password must contain at least 1 approved symbol.")
-
-        if password1 == password2:
-            password = password1
-        else:
-            return render_template("apology.html", message="Passwords do not match.")
-
-        p_hash = generate_password_hash(password, method = 'pbkdf2:sha256', salt_length = 8)
-
-        if len(db.execute("SELECT username FROM users WHERE username == :username", username=username)) == 0:
-            db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)", username=username, hash=p_hash)
-            return redirect("/")
-        else:
-            return render_template("apology.html",message="Username already exists. Please enter a new username.")
-
+        return render_template("register.html")
 
 ##endblock route register
 
