@@ -47,7 +47,59 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+#start block buy def
+#get method post
+ if request.method == "POST":
+
+        #check stock
+        if not request.form.get("symbol"):
+            return apology("must provide symbol")
+
+        #check shares
+        elif not request.form.get("shares"):
+            return apology("must provide shares")
+
+        #to check shares >0
+        elif int(request.form.get("shares")) < 0:
+            return apology("must provide a valid number of shares")
+
+        #Check stock exsist
+        if not request.form.get("symbol"):
+            return apology("must provide an existing symbol")
+
+        #lookup
+        symbol = request.form.get("symbol").upper()
+        stock = lookup(symbol)
+        if stock is None:
+            return apology("symbol does not exist")
+
+        #price trx
+        shares = int(request.form.get("shares"))
+        transactionb = shares * stock['price']
+
+        #check user cash
+        user_cash = db.execute("SELECT cash FROM users WHERE id=:id", id=session["user_id"])
+        cash = user_cash[0]["cash"]
+
+        #formula subs user cash
+        updt_cash = cash - transactionb
+
+        #update user cash
+        if updt_cash < 0:
+            return apology("you do not have enough cash")
+
+        # Update cash user after the transaction
+        db.execute("UPDATE users SET cash=:updt_cash WHERE id=:id", updt_cash=updt_cash, id=session["user_id"]);
+        # Update to table
+        db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=stock['symbol'], shares=shares, price=stock['price'])
+        flash("Bought!")
+        return redirect("/")
+
+    # redirect user
+    else:
+        return render_template("buy.html")
+
+#end block buy
 
 
 @app.route("/history")
