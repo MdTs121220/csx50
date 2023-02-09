@@ -50,52 +50,46 @@ def buy():
 #start block buy def
 #get method post
  if request.method == "POST":
+        if not (symbol := request.form.get("symbol")):
+            return apology("MISSING SYMBOL")
 
-        #check stock
-        if not request.form.get("symbol"):
-            return apology("must provide symbol")
+        if not (shares := request.form.get("shares")):
+            return apology("MISSING SHARES")
 
-        #check shares
-        elif not request.form.get("shares"):
-            return apology("must provide shares")
+        # Check share is numeric data type
+        try:
+            shares = int(shares)
+        except ValueError:
+            return apology("INVALID SHARES")
 
-        #to check shares >0
-        elif int(request.form.get("shares")) < 0:
-            return apology("must provide a valid number of shares")
+        # Check shares is positive number
+        if not (shares > 0):
+            return apology("INVALID SHARES")
 
-        #Check stock exsist
-        if not request.form.get("symbol"):
-            return apology("must provide an existing symbol")
+        # Ensure symbol is valided
+        if not (query := lookup(symbol)):
+            return apology("INVALID SYMBOL")
 
-        #lookup
-        symbol = request.form.get("symbol").upper()
-        stock = lookup(symbol)
-        if stock is None:
-            return apology("symbol does not exist")
+        rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
 
-        #price trx
-        shares = int(request.form.get("shares"))
-        transactionb = shares * stock['price']
+        user_owned_cash = rows[0]["cash"]
+        total_prices = query["price"] * shares
 
-        #check user cash
-        user_cash = db.execute("SELECT cash FROM users WHERE id=:id", id=session["user_id"])
-        cash = user_cash[0]["cash"]
+        # Ensure user have enough money
+        if user_owned_cash < total_prices:
+            return apology("CAN'T AFFORD")
 
-        #formula subs user cash
-        updt_cash = cash - transactionb
+        # Execute a transaction
+        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price) VALUES(?, ?, ?, ?, ?);",
+                   session["user_id"], query["name"], symbol, shares, query["price"])
 
-        #update user cash
-        if updt_cash < 0:
-            return apology("you do not have enough cash")
+        # Update user owned cash
+        db.execute("UPDATE users SET cash = ? WHERE id = ?;",
+                   (user_owned_cash - total_prices), session["user_id"])
 
-        # Update cash user after the transaction
-        db.execute("UPDATE users SET cash=:updt_cash WHERE id=:id", updt_cash=updt_cash, id=session["user_id"]);
-        # Update to table
-        db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=stock['symbol'], shares=shares, price=stock['price'])
         flash("Bought!")
-        return redirect("/")
 
-    # redirect user
+        return redirect("/")
     else:
         return render_template("buy.html")
 
