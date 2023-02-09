@@ -117,7 +117,7 @@ def register():
 ##block route register
 
     #Use POST Method to get username and password
-    if request.method == "POST":
+    if request.method == "GET":
 
         #Submit username and to be sure username not empty
         if not request.form.get("username"):
