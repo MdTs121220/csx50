@@ -79,11 +79,11 @@ def buy():
             return apology("SORRY YOU CAN'T")
 
         # time
-        transacted = datetime.datetime.now()
+        tgldate = datetime.datetime.now()
 
         # Execute a transaction table
-        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, transacted) VALUES(?, ?, ?, ?, ?, ?);",
-                   session["user_id"], query["name"], symbol, shares, query["price"], transacted)
+        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?, ?);",
+                   session["user_id"], query["name"], symbol, shares, query["price"], tgldate)
 
         # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
@@ -244,10 +244,12 @@ def sell():
         # Get user owned cash
         rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
 
+        # Time
+        tgldate = datetime.datetime.now()
 
         # DB Execute a transaction
-        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, transacted) VALUES(?, ?, ?, ?, ?, ?);",
-                   session["user_id"], query["name"], symbol, shares, query["price"], transacted)
+        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?, ?);",
+                   session["user_id"], query["name"], symbol, shares, query["price"], tgldate)
 
         # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
