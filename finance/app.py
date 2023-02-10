@@ -123,13 +123,13 @@ def register():
     if request.method == "POST":
 
         if not (username := request.form.get("username")):
-            return apology("MISSING USERNAME")
+            return apology("Missing Username")
 
         if not (password := request.form.get("password")):
-            return apology("MISSING PASSWORD")
+            return apology("Missing Password")
 
         if not (confirmation := request.form.get("confirmation")):
-            return apology("PASSWORD DON'T MATCH")
+            return apology("Password DON'T Match")
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?;", username)
