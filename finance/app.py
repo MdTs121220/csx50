@@ -41,7 +41,25 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return apology("TODO")
+    users = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+    owned_cash = users[0]['cash']
+
+    # Get user cash own
+    summaries = db.execute("""SELECT company, symbol, sum(shares) as sum_of_shares
+                              FROM transactions
+                              WHERE user_id = ?
+                              GROUP BY user_id, company, symbol
+                              HAVING sum_of_shares > 0;""", session["user_id"])
+
+    # Use lookup API to get the price and stock
+    summaries = [dict(x, **{'price': lookup(x['symbol'])['price']}) for x in summaries]
+
+    # Calcuate total price for each stock
+    summaries = [dict(x, **{'total': x['price']*x['sum_of_shares']}) for x in summaries]
+
+    sum_totals = owned_cash + sum([x['total'] for x in summaries])
+
+    return render_template("index.html", owned_cash=owned_cash, summaries=summaries, sum_totals=sum_totals)
 
 
 @app.route("/buy", methods=["GET", "POST"])
