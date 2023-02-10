@@ -2,6 +2,7 @@
 # CS50 for teachers
 # Indonesia
 # Finance
+
 import os
 
 from cs50 import SQL
