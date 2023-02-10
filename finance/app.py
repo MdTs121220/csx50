@@ -173,7 +173,7 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-     if request.method == "POST":
+    if request.method == "POST":
         # Ensure Symbol is exists
         if not (query := lookup(request.form.get("symbol"))):
             return apology("INVALID SYMBOL")
