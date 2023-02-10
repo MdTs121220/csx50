@@ -179,11 +179,11 @@ def register():
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?;", username)
 
-        # Ensure username not in database
+        # Check username
         if len(rows) != 0:
             return apology(f"The username '{username}' already exists. Please choose another name.")
 
-        # Ensure first password and second password are matched
+        # Check password entry
         if password != confirmation:
             return apology("password not matched")
 
