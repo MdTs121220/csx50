@@ -4,7 +4,6 @@ from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import apology, login_required, lookup, usd
@@ -12,24 +11,10 @@ from helpers import apology, login_required, lookup, usd
 # Configure application
 app = Flask(__name__)
 
-# Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-
-# Ensure responses aren't cached
-@app.after_request
-def after_request(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
-
-
 # Custom filter
 app.jinja_env.filters["usd"] = usd
 
 # Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -42,10 +27,20 @@ if not os.environ.get("API_KEY"):
     raise RuntimeError("API_KEY not set")
 
 
+@app.after_request
+def after_request(response):
+    """Ensure responses aren't cached"""
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
+
+
 @app.route("/")
 @login_required
 def index():
     """Show portfolio of stocks"""
+    #starthere
     users = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
     owned_cash = users[0]['cash']
 
@@ -65,6 +60,7 @@ def index():
     sum_totals = owned_cash + sum([x['total'] for x in summaries])
 
     return render_template("index.html", owned_cash=owned_cash, summaries=summaries, sum_totals=sum_totals)
+    #endhere
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -120,14 +116,15 @@ def buy():
 @login_required
 def history():
     """Show history of transactions"""
+    """starthere"""
     transactions = db.execute("SELECT * FROM transactions WHERE user_id = ?;", session["user_id"])
     return render_template("history.html", transactions=transactions)
+    """endhere"""
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
     # Forget any user_id
     session.clear()
 
@@ -155,6 +152,7 @@ def login():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
+
 
 
 @app.route("/logout")
@@ -185,41 +183,44 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
+##block route register
+    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        if not (username := request.form.get("username")):
-            return apology("MISSING USERNAME")
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username")
 
-        if not (password := request.form.get("password")):
-            return apology("MISSING PASSWORD")
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password")
 
-        if not (confirmation := request.form.get("confirmation")):
-            return apology("PASSWORD DON'T MATCH")
+        # Ensure password was submitted
+        elif not request.form.get("confirmation"):
+            return apology("must provide password confirmation")
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?;", username)
+        # Ensure confirmation password is equal to password
+        elif request.form.get("password") != request.form.get("confirmation"):
+            return apology("password dont match")
+        try:
+            # Add into db
+            new_user = db.execute("INSERT INTO users (username, hash) VALUES (?,?)", request.form.get("username"), generate_password_hash(request.form.get("password")))
 
-        # Ensure username not in database
-        if len(rows) != 0:
-            return apology(f"The username '{username}' already exists. Please choose another name.")
+        except:
+            # Check if its unique
+            return apology("username is already registered")
 
-        # Ensure first password and second password are matched
-        if password != confirmation:
-            return apology("password not matched")
+        # Remember the user
+        session["user_id"] = new_user
 
-        # Insert username into database
-        id = db.execute("INSERT INTO users (username, hash) VALUES (?, ?);",
-                        username, generate_password_hash(password))
-
-        # Remember which user has logged in
-        session["user_id"] = id
-
-        flash("Registered!")
-
+        # Redirect user to home page
         return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("register.html")
 
+#endblock route register
 
 @app.route("/sell", methods=["GET", "POST"])
 @login_required
