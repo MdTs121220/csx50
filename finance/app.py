@@ -83,7 +83,7 @@ def buy():
 
         # formula trx
         db.execute("INSERT INTO transactions(user_id, symbol, shares, price, date) VALUES(?, ?, ?, ?, ?);",
-                   session["user_id"], query["name"], symbol, shares, query["price"])
+                   session["user_id"], query["name"], symbol, shares, query["price"], date)
 
         # update cash owned
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
