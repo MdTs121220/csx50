@@ -49,7 +49,9 @@ def buy():
     """Buy shares of stock"""
     if request.method == "POST":
         if not (symbol := request.form.get("symbol")):
-            return apology()
+            return apology("MISSING SYMBOL")
+
+        if not (shares :=)
 
 
 @app.route("/history")
