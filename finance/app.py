@@ -51,7 +51,14 @@ def buy():
         if not (symbol := request.form.get("symbol")):
             return apology("MISSING SYMBOL")
 
-        if not (shares :=)
+        if not (shares := request.form.get("shares")):
+            return apology("MISSING SHARES")
+
+        try:
+            shares = int(shares)
+        except ValueError:
+            return apology("INVALID SHARES")
+        
 
 
 @app.route("/history")
