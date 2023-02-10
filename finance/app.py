@@ -47,8 +47,8 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-#start block buy def
-#get method post
+        #start block buy def
+        #get method post
  if request.method == "POST":
         if not (symbol := request.form.get("symbol")):
             return apology("MISSING SYMBOL")
@@ -92,8 +92,7 @@ def buy():
         return redirect("/")
     else:
         return render_template("buy.html")
-
-#end block buy
+        #end block buy
 
 
 @app.route("/history")
@@ -154,7 +153,16 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-    return apology("TODO")
+#startblockquote
+if request.method == "POST":
+        # Ensure Symbol is exists
+        if not (query := lookup(request.form.get("symbol"))):
+            return apology("INVALID SYMBOL")
+
+        return render_template("quote.html", query=query)
+    else:
+        return render_template("quote.html")
+#endblockquote
 
 
 @app.route("/register", methods=["GET", "POST"])
