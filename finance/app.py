@@ -78,7 +78,7 @@ def buy():
             return apology("SORRY YOU CAN'T")
 
         # formula trx
-        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price) VALUES((?, ?, ?, ?, ?);",
+        db.execute("INSERT INTO transactions(user_id, symbol, shares, price) VALUES(?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"])
 
         # update cash owned
