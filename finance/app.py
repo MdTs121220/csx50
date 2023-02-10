@@ -1,3 +1,7 @@
+# //Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//Hello.c
 import os
 
 from cs50 import SQL
