@@ -78,6 +78,9 @@ def buy():
         if user_owned_cash < total_prices:
             return apology("SORRY YOU CAN'T")
 
+        # update time
+        date = datetime.datetime.now()
+
         # formula trx
         db.execute("INSERT INTO transactions(user_id, symbol, shares, price) VALUES(?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"])
