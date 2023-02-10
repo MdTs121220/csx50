@@ -79,10 +79,10 @@ def buy():
             return apology("SORRY YOU CAN'T")
 
         # time
-        transacted = datetime.now()
+        transacted = datetime.datetime.now()
 
         # Execute a transaction table
-        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price) VALUES(?, ?, ?, ?, ?);",
+        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, transacted) VALUES(?, ?, ?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"])
 
         # Update user cash
@@ -243,6 +243,9 @@ def sell():
 
         # Get user owned cash
         rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+
+        # time
+        transacted = datetime.datetime.now()
 
         # DB Execute a transaction
         db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, transacted) VALUES(?, ?, ?, ?, ?, ?);",
