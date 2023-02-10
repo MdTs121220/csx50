@@ -55,17 +55,17 @@ def buy():
         if not (shares := request.form.get("shares")):
             return apology("MISSING SHARES")
 
-        # Check share is numeric data type
+        # Check share type data
         try:
             shares = int(shares)
         except ValueError:
             return apology("INVALID SHARES")
 
-        # Check shares is positive number
+        # Check shares > 0
         if not (shares > 0):
             return apology("INVALID SHARES")
 
-        # Ensure symbol is valided
+        # Try check symbol
         if not (query := lookup(symbol)):
             return apology("INVALID SYMBOL")
 
@@ -74,19 +74,19 @@ def buy():
         user_owned_cash = rows[0]["cash"]
         total_prices = query["price"] * shares
 
-        # Ensure user have enough money
+        # Check user have money enough
         if user_owned_cash < total_prices:
-            return apology("CAN'T AFFORD")
+            return apology("SORRY YOU CAN'T")
 
-        # Execute a transaction
+        # Execute a transaction table
         db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price) VALUES(?, ?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"])
 
-        # Update user owned cash
+        # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
                    (user_owned_cash - total_prices), session["user_id"])
 
-        flash("Bought!")
+        flash("Congratz Your Bought!")
 
         return redirect("/")
     else:
