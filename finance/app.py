@@ -249,7 +249,7 @@ def sell():
 
         # DB Execute a transaction
         db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?, ?);",
-                   session["user_id"], query["name"], symbol, shares, query["price"], tgldate)
+                   session["user_id"], query["name"], symbol, -shares, query["price"], tgldate)
 
         # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
