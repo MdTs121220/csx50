@@ -110,7 +110,7 @@ def quote():
     """Get stock quote."""
     if request.method == "POST":
         if not (query := lookup(request.form.get("symbol"))):
-            return apology("Invalid SYMBOL")
+            return apology("INVALID SYMBOL")
 
         return render_template("quote.html", query=query)
     else:
@@ -123,13 +123,13 @@ def register():
     if request.method == "POST":
 
         if not (username := request.form.get("username")):
-            return apology("Missing Username")
+            return apology("MISSING USERNAME")
 
         if not (password := request.form.get("password")):
-            return apology("Missing Password")
+            return apology("MISSING PASSWORD")
 
         if not (confirmation := request.form.get("confirmation")):
-            return apology("Password DON'T Match")
+            return apology("PASSWORD DON'T MATCH")
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?;", username)
