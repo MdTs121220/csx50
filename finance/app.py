@@ -82,7 +82,7 @@ def buy():
         date = datetime.datetime.now()
 
         # formula trx
-        db.execute("INSERT INTO transactions(user_id, symbol, shares, price) VALUES(?, ?, ?, ?);",
+        db.execute("INSERT INTO transactions(user_id, symbol, shares, price, date) VALUES(?, ?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"])
 
         # update cash owned
