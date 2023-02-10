@@ -68,6 +68,15 @@ def buy():
         if not (query := lookup(symbol)):
             return apology("INVALID SYMBOL")
 
+        rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+
+        user_owned_cash = rows[0]["cash"]
+        total_prices = query["price"] * shares
+
+        # check user have a enough money
+        if user_owned_cash < total_prices:
+            return apology(")
+
 
 
 
