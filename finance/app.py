@@ -5,7 +5,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-import datetime
+from datetime import datetime
 
 from helpers import apology, login_required, lookup, usd
 
@@ -78,6 +78,9 @@ def buy():
         if user_owned_cash < total_prices:
             return apology("SORRY YOU CAN'T")
 
+        # time
+        transacted = datetime.now()
+
         # Execute a transaction table
         db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price) VALUES(?, ?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"])
@@ -102,7 +105,6 @@ def history():
     transactions = db.execute("SELECT * FROM transactions WHERE user_id = ?;", session["user_id"])
     return render_template("history.html", transactions=transactions)
 
-    transacted = datetime.datetime.now()
 
 
 @app.route("/login", methods=["GET", "POST"])
