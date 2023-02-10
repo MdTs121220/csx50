@@ -67,9 +67,7 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-        """start block buy def"""
-        """get method post"""
- if request.method == "POST":
+    if request.method == "POST":
         if not (symbol := request.form.get("symbol")):
             return apology("MISSING SYMBOL")
 
@@ -112,7 +110,6 @@ def buy():
         return redirect("/")
     else:
         return render_template("buy.html")
-        """end block buy"""
 
 
 @app.route("/history")
