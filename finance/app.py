@@ -245,8 +245,8 @@ def sell():
         rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
 
         # DB Execute a transaction
-        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, transacted) VALUES(?, ?, ?, ?, ?);",
-                   session["user_id"], query["name"], symbol, -shares, query["price"])
+        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price, transacted) VALUES(?, ?, ?, ?, ?, ?);",
+                   session["user_id"], query["name"], symbol, shares, query["price"], transacted)
 
         # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
