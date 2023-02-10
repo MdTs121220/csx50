@@ -54,11 +54,21 @@ def buy():
         if not (shares := request.form.get("shares")):
             return apology("MISSING SHARES")
 
+        # Try check share type data
         try:
             shares = int(shares)
         except ValueError:
             return apology("INVALID SHARES")
-        
+
+        # check share if > 0 or positive
+        if not (shares > 0):
+            return apology("INVALID SHARES")
+
+        # check if symbol is valid
+        if not (query := lookup(symbol)):
+            return apology("INVALID SYMBOL")
+
+
 
 
 @app.route("/history")
