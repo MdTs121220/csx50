@@ -205,6 +205,7 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
+    # DB execute symbol owned
     owned_symbols = db.execute("""SELECT symbol, sum(shares) as sum_of_shares
                                   FROM transactions
                                   WHERE user_id = ?
@@ -218,13 +219,13 @@ def sell():
         if not (shares := request.form.get("shares")):
             return apology("MISSING SHARES")
 
-        # Check share is numeric data type
+        # Check share typedata
         try:
             shares = int(shares)
         except ValueError:
             return apology("INVALID SHARES")
 
-        # Check shares is positive number
+        # Check shares > 0
         if not (shares > 0):
             return apology("INVALID SHARES")
 
@@ -235,18 +236,18 @@ def sell():
 
         query = lookup(symbol)
 
-        # Get user currently owned cash
+        # Get user owned cash
         rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
 
-        # Execute a transaction
+        # DB Execute a transaction
         db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price) VALUES(?, ?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, -shares, query["price"])
 
-        # Update user owned cash
+        # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
                    (rows[0]['cash'] + (query['price'] * shares)), session["user_id"])
 
-        flash("Sold!")
+        flash("Successfully Sold!")
 
         return redirect("/")
 
