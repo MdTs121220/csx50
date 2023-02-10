@@ -75,7 +75,21 @@ def buy():
 
         # check user have a enough money
         if user_owned_cash < total_prices:
-            return apology(")
+            return apology("SORRY YOU CAN'T")
+
+        # formula trx
+        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price) VALUES((?, ?, ?, ?, ?);",
+                   session["user_id"], query["name"], symbol, shares, query["price"])
+
+        # update cash owned
+        db.execute("UPDATE users SET cash = ? WHERE id = ?;",
+                   (user_owned_cash - total_prices), session["user_id"])
+
+        flash("Bought!")
+
+        return redirect("/")
+    else:
+        return render_template("buy.html")
 
 
 
