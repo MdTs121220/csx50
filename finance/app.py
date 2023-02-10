@@ -41,7 +41,7 @@ def after_request(response):
 def index():
     """Show portfolio of stocks"""
     #starthere
-     users = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+    users = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
     owned_cash = users[0]['cash']
 
     # Get user currently owned stocks
