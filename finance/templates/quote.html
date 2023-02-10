@@ -7,7 +7,7 @@
 {% block main %}
     {% if query %}
         <p>
-            A share of {{ query.name}} ({{ query.symbol }}) costs {{ query.price | usd }}
+            Information of {{ query.name}} ({{ query.symbol }}) costs {{ query.price | usd }}
         </p>
     {% else %}
         <form action="/quote", method="post">
