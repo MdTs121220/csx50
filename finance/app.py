@@ -110,7 +110,7 @@ def quote():
     """Get stock quote."""
     if request.method == "POST":
         if not (query := lookup(request.form.get("symbol"))):
-            return apology("INVALID SYMBOL")
+            return apology("Invalid SYMBOL")
 
         return render_template("quote.html", query=query)
     else:
