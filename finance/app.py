@@ -86,7 +86,7 @@ def buy():
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
                    (user_owned_cash - total_prices), session["user_id"])
 
-        flash("Congratz Your Bought!")
+        flash("Successfully_Bought!")
 
         return redirect("/")
     else:
@@ -247,7 +247,7 @@ def sell():
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
                    (rows[0]['cash'] + (query['price'] * shares)), session["user_id"])
 
-        flash("Successfully Sold!")
+        flash("Successfully_Sold!")
 
         return redirect("/")
 
