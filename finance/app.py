@@ -281,6 +281,7 @@ def sell():
 
     else:
         return render_template("sell.html", symbols=owned_symbols)
+        
 
 @app.route("/repas", methods=["GET", "POST"])
 @login_required
