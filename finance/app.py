@@ -279,3 +279,33 @@ def sell():
 
     else:
         return render_template("sell.html", symbols=owned_symbols)
+
+@app.route("/repas", methods=["GET", "POST"])
+@login_required
+def reset():
+    if request.method == "POST":
+        if not (password := request.form.get("password")):
+            return apology("MISSING OLD PASSWORD")
+
+        rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+
+        if not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            return apology("INVALID PASSWORD")
+
+        if not (new_password := request.form.get("new_password")):
+            return apology("MISSING NEW PASSWORD")
+
+        if not (confirmation := request.form.get("confirmation")):
+            return apology("MISSING CONFIRMATION")
+
+        if new_password != confirmation:
+            return apology("PASSWORD NOT MATCH")
+
+        db.execute("UPDATE users set hash = ? WHERE id = ?;",
+                   generate_password_hash(new_password), session["user_id"])
+
+        flash("Password reset successful!")
+
+        return redirect("/")
+    else:
+        return render_template("chgpass.html")
