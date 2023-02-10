@@ -40,15 +40,35 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return apology("TODO")
+    #starthere
+     users = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+    owned_cash = users[0]['cash']
+
+    # Get user currently owned stocks
+    summaries = db.execute("""SELECT company, symbol, sum(shares) as sum_of_shares
+                              FROM transactions
+                              WHERE user_id = ?
+                              GROUP BY user_id, company, symbol
+                              HAVING sum_of_shares > 0;""", session["user_id"])
+
+    # Use lookup API to get the current price for each stock
+    summaries = [dict(x, **{'price': lookup(x['symbol'])['price']}) for x in summaries]
+
+    # Calcuate total price for each stock
+    summaries = [dict(x, **{'total': x['price']*x['sum_of_shares']}) for x in summaries]
+
+    sum_totals = owned_cash + sum([x['total'] for x in summaries])
+
+    return render_template("index.html", owned_cash=owned_cash, summaries=summaries, sum_totals=sum_totals)
+    #endhere
 
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
     """Buy shares of stock"""
-        #start block buy def
-        #get method post
+        """start block buy def"""
+        """get method post"""
  if request.method == "POST":
         if not (symbol := request.form.get("symbol")):
             return apology("MISSING SYMBOL")
@@ -92,14 +112,17 @@ def buy():
         return redirect("/")
     else:
         return render_template("buy.html")
-        #end block buy
+        """end block buy"""
 
 
 @app.route("/history")
 @login_required
 def history():
     """Show history of transactions"""
-    return apology("TODO")
+    """starthere"""
+    transactions = db.execute("SELECT * FROM transactions WHERE user_id = ?;", session["user_id"])
+    return render_template("history.html", transactions=transactions)
+    """endhere"""
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -205,7 +228,7 @@ def register():
     else:
         return render_template("register.html")
 
-##endblock route register
+#endblock route register
 
 
 
@@ -213,4 +236,50 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-    return apology("TODO")
+    owned_symbols = db.execute("""SELECT symbol, sum(shares) as sum_of_shares
+                                  FROM transactions
+                                  WHERE user_id = ?
+                                  GROUP BY user_id, symbol
+                                  HAVING sum_of_shares > 0;""", session["user_id"])
+
+    if request.method == "POST":
+        if not (symbol := request.form.get("symbol")):
+            return apology("MISSING SYMBOL")
+
+        if not (shares := request.form.get("shares")):
+            return apology("MISSING SHARES")
+
+        # Check share is numeric data type
+        try:
+            shares = int(shares)
+        except ValueError:
+            return apology("INVALID SHARES")
+
+        # Check shares is positive number
+        if not (shares > 0):
+            return apology("INVALID SHARES")
+
+        symbols_dict = {d['symbol']: d['sum_of_shares'] for d in owned_symbols}
+
+        if symbols_dict[symbol] < shares:
+            return apology("TOO MANY SHARES")
+
+        query = lookup(symbol)
+
+        # Get user currently owned cash
+        rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+
+        # Execute a transaction
+        db.execute("INSERT INTO transactions(user_id, company, symbol, shares, price) VALUES(?, ?, ?, ?, ?);",
+                   session["user_id"], query["name"], symbol, -shares, query["price"])
+
+        # Update user owned cash
+        db.execute("UPDATE users SET cash = ? WHERE id = ?;",
+                   (rows[0]['cash'] + (query['price'] * shares)), session["user_id"])
+
+        flash("Sold!")
+
+        return redirect("/")
+
+    else:
+        return render_template("sell.html", symbols=owned_symbols)
