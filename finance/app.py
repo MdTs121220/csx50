@@ -102,6 +102,8 @@ def history():
     transactions = db.execute("SELECT * FROM transactions WHERE user_id = ?;", session["user_id"])
     return render_template("history.html", transactions=transactions)
 
+    transacted = datetime.datetime.now()
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
