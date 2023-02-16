@@ -19,3 +19,4 @@ for (let row = 0; row < height; row++) {
     }
     console.log(); // add newline at the end of each row
   }
+  //
