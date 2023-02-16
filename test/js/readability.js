@@ -1,3 +1,9 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//readability.js
+//---------------------------------
 const readlineSync = require('readline-sync');
 const text = readlineSync.question('Text: ');
 
@@ -8,7 +14,7 @@ let countSentence = 0;
 const textLeng = text.length;
 
 for (let i = 0; i < textLeng; i++) {
-  if (text[i].match(/[a-z]/i)) {
+  if (text[i].match(/[a-z]/i)) {  //in JavaScript, we must use (/[a-z]/i) can be used instead of isalpha() to check if a character is an alphabet.
     countLetter++;
   }
 }
