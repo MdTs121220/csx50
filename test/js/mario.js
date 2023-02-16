@@ -7,19 +7,15 @@ while (height < 1 || height > 8) {
 }
 
 for (let row = 0; row < height; row++) {
-  for (let column = row + 1; column < height; column++) {
-    console.log(' '); // print without newline
+    for (let column = row + 1; column < height; column++) {
+      process.stdout.write(' ');
+    }
+    for (let hashes = height + row + 1; hashes > height; hashes--) { // right
+      process.stdout.write('#');
+    }
+    process.stdout.write('  ');
+    for (let hashes = height + row + 1; hashes > height; hashes--) { // left
+      process.stdout.write('#');
+    }
+    console.log(); // add newline at the end of each row
   }
-
-  for (let hashes = height + row + 1; hashes > height; hashes--) { // right
-    console.log('#');
-  }
-
-  console.log('  ');
-
-  for (let hashes = height + row + 1; hashes > height; hashes--) { // left
-    console.log('#');
-  }
-
-  console.log(); // add newline at the end of each row
-}
