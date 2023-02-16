@@ -1,3 +1,9 @@
+//---------------------------------
+//Markus Dwiyanto Tobi Sogen
+//CS50 for teachers
+//Indonesia
+//cash.js
+//---------------------------------
 const readlineSync = require('readline-sync');
 
 function getChangeOwed() {
