@@ -48,7 +48,48 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    # use post method
+	if request.method == "POST":
+        # check user entry symbol and shares
+		if not (symbol := request.form.get("symbol")):
+            return apology("Wrong or blank symbol")
+        elif not (shares := request.form.get("shares")):
+            return apology("Wrong or blank shares")
+
+        # Check share type data
+        try:
+            shares = int(shares)
+        except ValueError:
+            return apology("Wrong type share must number")
+
+        # Check shares > 0
+        elif not (shares > 0):
+            return apology("Wrong type share must postive number")
+
+        # db exceute user session
+		rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+
+        user_owned_cash = rows[0]["cash"]
+        total_prices = query["price"] * shares
+
+        # Check user have money enough
+        if user_owned_cash < total_prices:
+            return apology("You don't have a cash again")
+
+        # check realtime
+        tgldate = datetime.datetime.now()
+
+        # Execute a transaction table
+        db.execute("INSERT INTO transactions(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
+                   session["user_id"], query["name"], symbol, shares, query["price"], tgldate)
+
+        # Update user cash
+        db.execute("UPDATE users SET cash = ? WHERE id = ?;",
+                   (user_owned_cash - total_prices), session["user_id"])
+
+        return redirect("/")
+    else:
+        return render_template("buy.html")
 
 
 @app.route("/history")
