@@ -65,6 +65,10 @@ def buy():
         if not (shares > 0):
             return apology("Wrong type share must postive number")
 
+        # Try check symbol
+        if not (query := lookup(symbol)):
+            return apology("Wrong Symbol")
+
         # db exceute user session
         rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
 
