@@ -66,9 +66,6 @@ def buy():
         if not (shares > 0):
             return apology("Wrong type share must postive number")
 
-        # db exceute user session
-	rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
-
         user_owned_cash = rows[0]["cash"]
         total_prices = query["price"] * shares
 
@@ -90,7 +87,7 @@ def buy():
         return redirect("/")
     else:
         return render_template("buy.html")
-    
+
 
 @app.route("/history")
 @login_required
