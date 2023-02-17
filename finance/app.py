@@ -72,23 +72,23 @@ def buy():
         # db exceute user session
         rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
 
-        owned_cash = rows[0]["cash"]
+        user_cash = rows[0]["cash"]
         total_prices = query["price"] * shares
 
         # Check user have money enough
-        if owned_cash < total_prices:
+        if user_cash < total_prices:
             return apology("You don't have a cash again")
 
         # check realtime
         tgldate = datetime.datetime.now()
 
         # Execute a transaction table
-        db.execute("INSERT INTO transactions(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
+        db.execute("INSERT INTO transaksi(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"], tgldate)
 
         # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
-                   (owned_cash - total_prices), session["user_id"])
+                   (user_cash - total_prices), session["user_id"])
 
         return redirect("/")
     else:
