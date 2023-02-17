@@ -66,11 +66,11 @@ def buy():
             return apology("Wrong type share must postive number")
 
         rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
-        owned_cash = rows[0]["cash"]
+        user_owned_cash = rows[0]["cash"]
         total_prices = query["price"] * shares
 
         # Check user have money enough
-        if owned_cash < total_prices:
+        if user_owned_cash < total_prices:
             return apology("You don't have a cash again")
 
         # check realtime
@@ -82,7 +82,7 @@ def buy():
 
         # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
-                   (owned_cash - total_prices), session["user_id"])
+                   (user_owned_cash - total_prices), session["user_id"])
 
         return redirect("/")
     else:
