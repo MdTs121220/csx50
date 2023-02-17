@@ -53,8 +53,7 @@ def buy():
         # check user entry symbol and shares
         if not (symbol := request.form.get("symbol")):
             return apology("Wrong or blank symbol")
-
-        if not (shares := request.form.get("shares")):
+        elif not (shares := request.form.get("shares")):
             return apology("Wrong or blank shares")
 
         # Check share type data
@@ -68,7 +67,7 @@ def buy():
             return apology("Wrong type share must postive number")
 
         # db exceute user session
-		rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+	rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
 
         user_owned_cash = rows[0]["cash"]
         total_prices = query["price"] * shares
@@ -91,7 +90,7 @@ def buy():
         return redirect("/")
     else:
         return render_template("buy.html")
-
+    
 
 @app.route("/history")
 @login_required
