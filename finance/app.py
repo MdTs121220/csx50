@@ -77,7 +77,7 @@ def buy():
         tgldate = datetime.datetime.now()
 
         # Execute a transaction table
-        db.execute("INSERT INTO transactions(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
+        db.execute("INSERT INTO transaction(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"], tgldate)
 
         # Update user cash
