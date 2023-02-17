@@ -65,7 +65,9 @@ def buy():
         if not (shares > 0):
             return apology("Wrong type share must postive number")
 
+        # db exceute user session
         rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+
         user_owned_cash = rows[0]["cash"]
         total_prices = query["price"] * shares
 
@@ -77,7 +79,7 @@ def buy():
         tgldate = datetime.datetime.now()
 
         # Execute a transaction table
-        db.execute("INSERT INTO transaksi(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
+        db.execute("INSERT INTO transactions(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
                    session["user_id"], query["name"], symbol, shares, query["price"], tgldate)
 
         # Update user cash
