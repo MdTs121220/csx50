@@ -50,12 +50,11 @@ def buy():
     """Buy shares of stock"""
     # use post method
 	if request.method == "POST":
-                
         # check user entry symbol and shares
-		if not (symbol := request.form.get("symbol")):
+        if not (symbol := request.form.get("symbol")):
             return apology("Wrong or blank symbol")
 
-        elif not (shares := request.form.get("shares")):
+        if not (shares := request.form.get("shares")):
             return apology("Wrong or blank shares")
 
         # Check share type data
@@ -65,7 +64,7 @@ def buy():
             return apology("Wrong type share must number")
 
         # Check shares > 0
-        elif not (shares > 0):
+        if not (shares > 0):
             return apology("Wrong type share must postive number")
 
         # db exceute user session
