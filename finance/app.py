@@ -84,7 +84,7 @@ def buy():
 
         # Execute a transaction table
         db.execute("INSERT INTO transaksi(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
-                   session["user_id"], query["name"], symbol, shares, query["price"], tgldate)
+                   session["user_id"], symbol, shares, query["price"], tgldate)
 
         # Update user cash
         db.execute("UPDATE users SET cash = ? WHERE id = ?;",
