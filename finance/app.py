@@ -50,7 +50,7 @@ def buy():
     """Buy shares of stock"""
     # use post method
 	if request.method == "POST":
-
+                
         # check user entry symbol and shares
 		if not (symbol := request.form.get("symbol")):
             return apology("Wrong or blank symbol")
