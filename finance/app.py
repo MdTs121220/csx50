@@ -239,4 +239,48 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-    return apology("TODO")
+    if request.method == "POST":
+        # Try to get form data
+        symbol = request.form.get("symbol")
+        shares = request.form.get("shares")
+
+        # Ensure symbol and shares were submitted
+        if not symbol or not shares:
+            return apology("must select stock and specify number of shares to sell", 400)
+
+        # Ensure shares is a positive integer
+        try:
+            shares = int(shares)
+            if shares <= 0:
+                raise ValueError
+        except ValueError:
+            return apology("number of shares must be a positive integer", 400)
+
+        # Query the database for the user's shares of the selected stock
+        rows = db.execute("SELECT SUM(shares) as total_shares FROM purchases WHERE user_id = :user_id AND symbol = :symbol GROUP BY symbol", user_id=session["user_id"], symbol=symbol)
+
+        # Ensure the user owns enough shares of the selected stock
+        if not rows or rows[0]["total_shares"] < shares:
+            return apology(f"you don't own {shares} share{'s' if shares != 1 else ''} of {symbol}", 400)
+
+        # Lookup the current price of the selected stock
+        quote = lookup(symbol)
+
+        # Calculate the total value of the sold shares
+        value = quote["price"] * shares
+
+        # Subtract the sold shares from the user's portfolio in the database
+        db.execute("INSERT INTO purchases (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=symbol, shares=-shares, price=quote["price"])
+
+        # Add the sold shares' value to the user's cash balance in the database
+        db.execute("UPDATE users SET cash = cash + :value WHERE id = :user_id", value=value, user_id=session["user_id"])
+
+        flash(f"Sold {shares} share{'s' if shares != 1 else ''} of {symbol} for {usd(value)}.")
+
+        # Redirect the user to the home page
+        return redirect("/")
+    else:
+        # Get the symbols of the stocks the user owns and that have at least 1 share
+        symbols = [row["symbol"] for row in db.execute("SELECT symbol FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])]
+
+        return render_template("sell.html", symbols=symbols)
