@@ -114,35 +114,42 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        confirmation = request.form['confirmation']
+    if request.method == "POST":
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username", 400)
 
-        # Check if username is blank or already exists in the database
-        if not username:
-            return render_template('register.html', error='Username cannot be blank')
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password", 400)
 
-        conn = sqlite3.connect('database.db')
-        c = conn.cursor()
-        c.execute('SELECT * FROM users WHERE username=?', (username,))
-        user = c.fetchone()
-        if user is not None:
-            return render_template('register.html', error='Username already exists')
+        # Ensure password confirmation was submitted
+        elif not request.form.get("confirmation"):
+            return apology("must provide password confirmation", 400)
 
-        # Check if password is blank or does not match the confirmation
-        if not password or password != confirmation:
-            return render_template('register.html', error='Passwords do not match')
+        # Ensure password and confirmation match
+        elif request.form.get("password") != request.form.get("confirmation"):
+            return apology("passwords must match", 400)
 
-        # Hash the password and store it in the database
-        hashed_password = generate_password_hash(password)
-        c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
-        conn.commit()
-        conn.close()
+        # Hash the password
+        hash = generate_password_hash(request.form.get("password"))
 
-        return redirect(url_for('login'))
+        # Insert the new user into users
+        result = db.execute("INSERT INTO users (username, hash) VALUES(?, ?)",
+                            request.form.get("username"), hash)
 
-    return render_template('register.html')
+        # Check if username already exists
+        if not result:
+            return apology("username already exists", 400)
+
+        # Remember which user has logged in
+        session["user_id"] = result
+
+        # Redirect user to home page
+        return redirect("/")
+
+    else:
+        return render_template("register.html")
 
 
 @app.route("/sell", methods=["GET", "POST"])
