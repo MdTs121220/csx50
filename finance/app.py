@@ -41,7 +41,7 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    # Query the database for ortfolio and cash
+    # Query the database for portfolio and cash
     portfolio = db.execute("SELECT symbol, SUM(shares) as shares FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])
     cash = db.execute("SELECT cash FROM users WHERE id = :user_id", user_id=session["user_id"])[0]["cash"]
 
