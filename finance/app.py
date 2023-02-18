@@ -45,7 +45,7 @@ def index():
     portfolio = db.execute("SELECT symbol, SUM(shares) as shares FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])
     cash = db.execute("SELECT cash FROM users WHERE id = :user_id", user_id=session["user_id"])[0]["cash"]
 
-    # Create a list of dicts with stock information
+    # Create a list of dicts for information stock
     stocks = []
     total = 0
     for row in portfolio:
@@ -62,7 +62,7 @@ def index():
         })
         total += value
 
-    # Render index.html with the stocks and total information
+    # Render index.html with the stocks and display total information
     return render_template("index.html", stocks=stocks, cash=usd(cash), total=usd(total+cash))
 
 
