@@ -239,6 +239,9 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
+    @app.route("/sell", methods=["GET", "POST"])
+@login_required
+def sell():
     if request.method == "POST":
         # Try to get form data
         symbol = request.form.get("symbol")
@@ -277,10 +280,10 @@ def sell():
 
         flash(f"Sold {shares} share{'s' if shares != 1 else ''} of {symbol} for {usd(value)}.")
 
-        # Redirect the user to the home page
-        return redirect("/")
+        return redirect(url_for("index"))
     else:
-        # Get the symbols of the stocks the user owns and that have at least 1 shares
-        symbols = [row["symbol"] for row in db.execute("SELECT symbol FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])]
+        # Query the database for all stocks owned by the user
+        stocks = db.execute("SELECT symbol, name FROM purchases JOIN stocks ON purchases.symbol = stocks.symbol WHERE user_id = :user_id AND shares > 0 GROUP BY purchases.symbol", user_id=session["user_id"])
 
-        return render_template("sell.html", symbols=symbols)
+        return render_template("sell.html", stocks=stocks)
+
