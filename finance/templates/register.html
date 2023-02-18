@@ -1,20 +1,25 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Register</title>
-  </head>
-  <body>
-    {% if error %}
-      <p style="color: red;">{{ error }}</p>
-    {% endif %}
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
     <form action="/register" method="post">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username"><br><br>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password"><br><br>
-      <label for="confirmation">Confirm Password:</label>
-      <input type="password" id="confirmation" name="confirmation"><br><br>
-      <input type="submit" value="Register">
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirm Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
     </form>
-  </body>
-</html>
+{% endblock %}
