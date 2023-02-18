@@ -280,7 +280,7 @@ def sell():
         # Redirect the user to the home page
         return redirect("/")
     else:
-        # Get the symbols of the stocks the user owns and that have at least 1 share
+        # Get the symbols of the stocks the user owns and that have at least 1 shares
         symbols = [row["symbol"] for row in db.execute("SELECT symbol FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])]
 
         return render_template("sell.html", symbols=symbols)
