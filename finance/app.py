@@ -5,7 +5,6 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-import datetime
 
 from helpers import apology, login_required, lookup, usd
 
@@ -48,51 +47,7 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    if request.method == "POST":
-        # check user entry symbol and shares
-        if not (symbol := request.form.get("symbol")):
-            return apology("Wrong or blank symbol")
-        elif not (shares := request.form.get("shares")):
-            return apology("Wrong or blank shares")
-
-        # Check share type data
-        try:
-            shares = int(shares)
-        except ValueError:
-            return apology("Wrong type share must number")
-
-        # Check shares > 0
-        if not (shares > 0):
-            return apology("Wrong type share must postive number")
-
-        # Try check symbol
-        if not (query := lookup(symbol)):
-            return apology("Wrong Symbol")
-
-        # db exceute user session
-        rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
-
-        user_cash = rows[0]["cash"]
-        total_prices = query["price"] * shares
-
-        # Check user have money enough
-        if user_cash < total_prices:
-            return apology("You don't have a cash again")
-
-        # check realtime
-        tgldate = datetime.datetime.now()
-
-        # Execute a transaction table
-        db.execute("INSERT INTO transaksi(user_id, symbol, shares, price, tgldate) VALUES(?, ?, ?, ?, ?);",
-                   session["user_id"], symbol, shares, query["price"], tgldate)
-
-        # Update user cash
-        db.execute("UPDATE users SET cash = ? WHERE id = ?;",
-                   (user_cash - total_prices), session["user_id"])
-
-        return redirect("/")
-    else:
-        return render_template("buy.html")
+    return apology("TODO")
 
 
 @app.route("/history")
@@ -153,55 +108,13 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-    # use post method
-    if request.method == "POST":
-
-        # check symbol entry
-        if not (query := lookup(request.form.get("symbol"))):
-            return apology("Wrong symbol")
-
-        return render_template("quote.html", query=query)
-    else:
-        return render_template("quote.html")
+    return apology("TODO")
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-     # use POST method
-    if request.method == "POST":
-
-        # check user entry username
-        if not request.form.get("username"):
-            return apology("username blank")
-
-        # check user entry password
-        elif not request.form.get("password") or not request.form.get("confirmation"):
-            return apology("must entry your password")
-
-        # check passwords match
-        elif request.form.get("password") != request.form.get("confirmation"):
-            return apology("passwords do not match")
-
-        # chek username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
-        if len(rows) >= 1:
-            return apology("username already exists")
-
-        # add user to db
-        db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)",
-                    username=request.form.get("username"),
-                    hash=generate_password_hash(request.form.get("password")))
-
-        # remember session id user
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
-        session["user_id"] = rows[0]["id"]
-
-        # redirect to home page
-        return redirect("/")
-
-    else:
-        return render_template("register.html")
+    return apology("TODO")
 
 
 @app.route("/sell", methods=["GET", "POST"])
