@@ -114,7 +114,35 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    return apology("TODO")
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirmation = request.form['confirmation']
+
+        # Check if username is blank or already exists in the database
+        if not username:
+            return render_template('register.html', error='Username cannot be blank')
+
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute('SELECT * FROM users WHERE username=?', (username,))
+        user = c.fetchone()
+        if user is not None:
+            return render_template('register.html', error='Username already exists')
+
+        # Check if password is blank or does not match the confirmation
+        if not password or password != confirmation:
+            return render_template('register.html', error='Passwords do not match')
+
+        # Hash the password and store it in the database
+        hashed_password = generate_password_hash(password)
+        c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('login'))
+
+    return render_template('register.html')
 
 
 @app.route("/sell", methods=["GET", "POST"])
