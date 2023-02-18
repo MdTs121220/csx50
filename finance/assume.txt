@@ -1,0 +1,14 @@
+//explain about buy -> my assume
+try my pseudocode
+1. Check if the form has been submitted via POST. If not, render the buy form.
+2. Retrieve the symbol and number of shares from the form data.
+3. Call lookup to get the current price of the stock. If the symbol is invalid, return an apology.
+4. Check if the number of shares is a positive integer. If not, return an apology.
+5. Retrieve the current user's cash balance from the database.
+6. Calculate the cost of the purchase and check if the user can afford it. If not, return an apology.
+7. Update the user's cash balance and record the purchase in the database.
+8. Flash a success message and redirect to the home page.
+
+In subrutine by i try to create in my app:
+from app import db, Purchase
+db.create_all()
