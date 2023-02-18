@@ -47,7 +47,56 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    if request.method == "POST":
+        # Check symbol submit
+        if not request.form.get("symbol"):
+            return apology("must provide symbol", 403)
+
+        # Look up price
+        quote = lookup(request.form.get("symbol"))
+        if not quote:
+            return apology("invalid symbol", 403)
+
+        # Check shares submit
+        try:
+            shares = int(request.form.get("shares"))
+            if shares <= 0:
+                raise ValueError
+        except (TypeError, ValueError):
+            return apology("must provide positive integer for shares")
+
+        # Get current ballance
+        rows = db.execute("SELECT cash FROM users WHERE id = :user_id", user_id=session["user_id"])
+        if len(rows) != 1:
+            return apology("error getting cash balance", 403)
+        cash = rows[0]["cash"]
+
+        # Calculate total cost of shares
+        total_cost = shares * quote["price"]
+
+        # Check user can afford purchase
+        if cash < total_cost:
+            return apology("insufficient funds", 403)
+
+        # Record purchase in new table
+        db.execute(
+            "INSERT INTO purchases (user_id, symbol, price, shares, timestamp) VALUES (:user_id, :symbol, :price, :shares, :timestamp)",
+            user_id=session["user_id"],
+            symbol=quote["symbol"],
+            price=quote["price"],
+            shares=shares,
+            timestamp=datetime.datetime.now()
+        )
+
+        # Update user cash
+        db.execute("UPDATE users SET cash = cash - :total_cost WHERE id = :user_id", total_cost=total_cost, user_id=session["user_id"])
+
+        # Redirect to home page
+        flash("Shares purchased!")
+        return redirect("/")
+
+    else:
+        return render_template("buy.html")
 
 
 @app.route("/history")
