@@ -142,7 +142,7 @@ def register():
         if not result:
             return apology("username already exists", 400)
 
-        # Remember which user has logged in
+        # Remember user has login
         session["user_id"] = result
 
         # Redirect user to home page
