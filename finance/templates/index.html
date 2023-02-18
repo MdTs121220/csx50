@@ -24,13 +24,13 @@
                     <td>{{ stock.name }}</td>
                     <td>{{ stock.shares }}</td>
                     <td>${{ stock.price }}</td>
-                    <td>${{ stock.total_value }}</td>
+                    <td>${{ stock.value }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <h2>Cash Balance: ${{ cash }}</h2>
+    <h2>Cash Balance: {{ cash }}</h2>
 
-    <h2>Total Portfolio Value: ${{ total }}</h2>
+    <h2>Total Portfolio Value: {{ total }}</h2>
 {% endblock %}
