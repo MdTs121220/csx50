@@ -9,6 +9,14 @@ try my pseudocode
 7. Update the user's cash balance and record the purchase in the database.
 8. Flash a success message and redirect to the home page.
 
-In subrutine by i try to create in my app:
-from app import db, Purchase
-db.create_all()
+In subrutine by i try to create create db:
+CREATE TABLE purchases (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    symbol TEXT NOT NULL,
+    shares INTEGER NOT NULL,
+    price NUMERIC NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+or INSERT INTO purchases (user_id, symbol, shares, price) VALUES (?, ?, ?, ?)
+The table i chose name is purchases
