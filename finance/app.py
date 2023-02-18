@@ -244,35 +244,35 @@ def sell():
         symbol = request.form.get("symbol")
         shares = request.form.get("shares")
 
-        # Ensure symbol and shares were submitted
+        # Check symbol and shares were submitted
         if not symbol or not shares:
-            return apology("must select stock and specify number of shares to sell", 400)
+            return apology("you must select stock and number of shares to sell", 400)
 
-        # Ensure shares is a positive integer
+        # Try check shares is a positive int
         try:
             shares = int(shares)
             if shares <= 0:
                 raise ValueError
         except ValueError:
-            return apology("number of shares must be a positive integer", 400)
+            return apology("number must be a positive integer", 400)
 
-        # Query the database for the user's shares of the selected stock
+        # Query the database for user check shares of the selected stock
         rows = db.execute("SELECT SUM(shares) as total_shares FROM purchases WHERE user_id = :user_id AND symbol = :symbol GROUP BY symbol", user_id=session["user_id"], symbol=symbol)
 
-        # Ensure the user owns enough shares of the selected stock
+        # Check the user have owns enough shares for selected stock
         if not rows or rows[0]["total_shares"] < shares:
             return apology(f"you don't own {shares} share{'s' if shares != 1 else ''} of {symbol}", 400)
 
-        # Lookup the current price of the selected stock
+        # Lookup current price
         quote = lookup(symbol)
 
-        # Calculate the total value of the sold shares
+        # Calculate the total value sold
         value = quote["price"] * shares
 
-        # Subtract the sold shares from the user's portfolio in the database
+        # Insert the sold shares from the user portfolio in the database
         db.execute("INSERT INTO purchases (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=symbol, shares=-shares, price=quote["price"])
 
-        # Add the sold shares' value to the user's cash balance in the database
+        # Update sold shares value to the user cash balance in the database
         db.execute("UPDATE users SET cash = cash + :value WHERE id = :user_id", value=value, user_id=session["user_id"])
 
         flash(f"Sold {shares} share{'s' if shares != 1 else ''} of {symbol} for {usd(value)}.")
