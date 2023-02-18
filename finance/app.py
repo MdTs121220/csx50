@@ -41,7 +41,29 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return apology("TODO")
+    # Query the database for ortfolio and cash
+    portfolio = db.execute("SELECT symbol, SUM(shares) as shares FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])
+    cash = db.execute("SELECT cash FROM users WHERE id = :user_id", user_id=session["user_id"])[0]["cash"]
+
+    # Create a list of dicts with stock information
+    stocks = []
+    total = 0
+    for row in portfolio:
+        symbol = row["symbol"]
+        shares = row["shares"]
+        quote = lookup(symbol)
+        value = quote["price"] * shares
+        stocks.append({
+            "symbol": symbol,
+            "name": quote["name"],
+            "shares": shares,
+            "price": usd(quote["price"]),
+            "value": usd(value)
+        })
+        total += value
+
+    # Render index.html with the stocks and total information
+    return render_template("index.html", stocks=stocks, cash=usd(cash), total=usd(total+cash))
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -138,7 +160,7 @@ def login():
         # Redirect user to home page
         return redirect("/")
 
-    
+
     else:
         return render_template("login.html")
 
