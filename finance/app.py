@@ -131,7 +131,7 @@ def history():
 
     # convert time string history transaction
     for row in rows:
-        row["timestamp"] = datetime.strptime(row["timestamp"], "%Y-%m-%d %H:%M:%S")
+        row["timestamp"] = datetime.datetime.now()
         row["price"] = usd(row["price"])
         row["shares"] = "{:,}".format(row["shares"])
         row["total"] = usd(row["total"])
