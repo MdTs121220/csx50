@@ -246,11 +246,11 @@ def sell():
     if request.method == "POST":
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
-            return apology("must select symbol")
+            return apology("must select symbol", 400)
 
         # Ensure number of shares was submitted
         if not request.form.get("shares"):
-            return apology("must provide number of shares")
+            return apology("must provide number of shares", 400)
 
         # Ensure shares is a positive integer
         try:
@@ -258,7 +258,7 @@ def sell():
             if shares < 1:
                 raise ValueError
         except ValueError:
-            return apology("number of shares must be a positive integer")
+            return apology("number of shares must be a positive integer", 400)
 
         symbol = request.form.get("symbol")
 
