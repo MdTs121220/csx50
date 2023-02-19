@@ -135,6 +135,7 @@ def history():
         row["price"] = usd(row["price"])
         row["shares"] = "{:,}".format(row["shares"])
         row["total"] = usd(row["total"])
+
     # render history template
     return render_template("history.html", rows=rows)
 
