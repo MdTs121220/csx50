@@ -126,7 +126,17 @@ def buy():
 @login_required
 def history():
     """Show history of transactions"""
-    return apology("TODO")
+    # try query database for user history transaction
+    rows = db.execute("SELECT * FROM purchases WHERE user_id = :user_id", user_id=session["user_id"])
+
+    # convert time string history transaction
+    for row in rows:
+        row["date_time"] = datetime.strptime(row["date_time"], "%Y-%m-%d %H:%M:%S")
+        row["price"] = usd(row["price"])
+        row["shares"] = "{:,}".format(row["shares"])
+        row["total"] = usd(row["total"])
+    # render history template
+    return render_template("history.html", rows=rows)
 
 
 @app.route("/login", methods=["GET", "POST"])
