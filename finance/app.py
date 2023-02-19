@@ -240,7 +240,7 @@ def register():
 def sell():
     """Sell shares of stock"""
     # Get user's stocks
-    stocks = db.execute("SELECT symbol, SUM(shares) as total_shares FROM transactions WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])
+    stocks = db.execute("SELECT symbol, SUM(shares) as total_shares FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])
     symbols = [row["symbol"] for row in stocks]
 
     if request.method == "POST":
@@ -274,7 +274,7 @@ def sell():
         price = stock_info["price"]
 
         # Record the transaction
-        db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=symbol, shares=-shares, price=price)
+        db.execute("INSERT INTO purchases (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=symbol, shares=-shares, price=price)
 
         # Update the user's cash balance
         db.execute("UPDATE users SET cash = cash + :proceeds WHERE id = :user_id", proceeds=shares*price, user_id=session["user_id"])
