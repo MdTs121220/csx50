@@ -239,47 +239,47 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-    # Get user's stocks
+    # Cek user stock
     stocks = db.execute("SELECT symbol, SUM(shares) as total_shares FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])
     symbols = [row["symbol"] for row in stocks]
 
     if request.method == "POST":
-        # Ensure symbol was submitted
+        # Try check symbol was submitted
         if not request.form.get("symbol"):
             return apology("must select symbol", 400)
 
-        # Ensure number of shares was submitted
+        # Try check number of shares was submitted
         if not request.form.get("shares"):
             return apology("must provide number of shares", 400)
 
-        # Ensure shares is a positive integer
+        # Try check shares is a positive int
         try:
             shares = int(request.form.get("shares"))
             if shares < 1:
                 raise ValueError
         except ValueError:
-            return apology("number of shares must be a positive integer", 400)
+            return apology("number of shares must be a positive", 400)
 
         symbol = request.form.get("symbol")
 
-        # Ensure user owns the selected stock and has enough shares to sell
+        # Check user portfolio is enough
         if symbol not in symbols:
-            return apology("you do not own this stock")
+            return apology("sory you don't own this stock", 400)
         total_shares = next(stock["total_shares"] for stock in stocks if stock["symbol"] == symbol)
         if shares > total_shares:
-            return apology("you do not own enough shares")
+            return apology("sory you do not own enough shares", 400)
 
-        # Look up the stock's current price
+        # Look up the stock
         stock_info = lookup(symbol)
         price = stock_info["price"]
 
         # Record the transaction
         db.execute("INSERT INTO purchases (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=symbol, shares=-shares, price=price)
 
-        # Update the user's cash balance
+        # Update the user cash
         db.execute("UPDATE users SET cash = cash + :proceeds WHERE id = :user_id", proceeds=shares*price, user_id=session["user_id"])
 
-        flash("Sold!")
+        flash("Successful Sold!")
         return redirect("/")
 
     else:
