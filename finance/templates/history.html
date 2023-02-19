@@ -5,27 +5,34 @@
 {% endblock %}
 
 {% block main %}
-    <h1>History</h1>
+    <h2>Portfolio</h2>
+
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Type</th>
                 <th>Symbol</th>
-                <th>Price</th>
+                <th>Name</th>
                 <th>Shares</th>
-                <th>Timestamp</th>
+                <th>Price</th>
+                <th>Total Value</th>
+                <th>Date Time</th>
             </tr>
         </thead>
         <tbody>
-            {% for transaction in transactions %}
+            {% for stock in stocks %}
                 <tr>
-                    <td>{{ transaction.type }}</td>
                     <td>{{ transaction.symbol }}</td>
-                    <td>${{ transaction.price|floatformat }}</td>
+                    <td>{{ transactionname }}</td>
                     <td>{{ transaction.shares }}</td>
-                    <td>{{ transaction.timestamp }}</td>
+                    <td>${{ transaction.price }}</td>
+                    <td>${{ transaction.value }}</td>
+                    <td>${{ transaction.timestamp }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <h2>Cash Balance: {{ cash }}</h2>
+
+    <h2>Total Portfolio Value: {{ total }}</h2>
 {% endblock %}
