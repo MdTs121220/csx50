@@ -239,48 +239,49 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
+    # Get user's stocks
+    stocks = db.execute("SELECT symbol, SUM(shares) as total_shares FROM transactions WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])
+    symbols = [row["symbol"] for row in stocks]
+
     if request.method == "POST":
-        # Try to get form data
-        symbol = request.form.get("symbol")
-        shares = request.form.get("shares")
+        # Ensure symbol was submitted
+        if not request.form.get("symbol"):
+            return apology("must select symbol")
 
-        # Check symbol and shares were submitted
-        if not symbol or not shares:
-            return apology("you must select stock and number of shares to sell", 400)
+        # Ensure number of shares was submitted
+        if not request.form.get("shares"):
+            return apology("must provide number of shares")
 
-        # Try check shares is a positive int
+        # Ensure shares is a positive integer
         try:
-            shares = int(shares)
-            if shares <= 0:
+            shares = int(request.form.get("shares"))
+            if shares < 1:
                 raise ValueError
         except ValueError:
-            return apology("number must be a positive integer", 400)
+            return apology("number of shares must be a positive integer")
 
-        # Query the database for user check shares of the selected stock
-        rows = db.execute("SELECT SUM(shares) as total_shares FROM purchases WHERE user_id = :user_id AND symbol = :symbol GROUP BY symbol", user_id=session["user_id"], symbol=symbol)
+        symbol = request.form.get("symbol")
 
-        # Check the user have owns enough shares for selected stock
-        if not rows or rows[0]["total_shares"] < shares:
-            return apology(f"you don't own {shares} share{'s' if shares != 1 else ''} of {symbol}", 400)
+        # Ensure user owns the selected stock and has enough shares to sell
+        if symbol not in symbols:
+            return apology("you do not own this stock")
+        total_shares = next(stock["total_shares"] for stock in stocks if stock["symbol"] == symbol)
+        if shares > total_shares:
+            return apology("you do not own enough shares")
 
-        # Lookup current price
-        quote = lookup(symbol)
+        # Look up the stock's current price
+        stock_info = lookup(symbol)
+        price = stock_info["price"]
 
-        # Calculate the total value sold
-        value = quote["price"] * shares
+        # Record the transaction
+        db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=symbol, shares=-shares, price=price)
 
-        # Insert the sold shares from the user portfolio in the database
-        db.execute("INSERT INTO purchases (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)", user_id=session["user_id"], symbol=symbol, shares=-shares, price=quote["price"])
+        # Update the user's cash balance
+        db.execute("UPDATE users SET cash = cash + :proceeds WHERE id = :user_id", proceeds=shares*price, user_id=session["user_id"])
 
-        # Update sold shares value to the user cash balance in the database
-        db.execute("UPDATE users SET cash = cash + :value WHERE id = :user_id", value=value, user_id=session["user_id"])
-
-        flash(f"Sold {shares} share{'s' if shares != 1 else ''} of {symbol} for {usd(value)}.")
-
-        # Redirect the user to the home page
+        flash("Sold!")
         return redirect("/")
-    else:
-        # Get the symbols of the stocks the user owns and that have at least 1 shares
-        symbols = [row["symbol"] for row in db.execute("SELECT symbol FROM purchases WHERE user_id = :user_id GROUP BY symbol HAVING SUM(shares) > 0", user_id=session["user_id"])]
 
+    else:
         return render_template("sell.html", symbols=symbols)
+
