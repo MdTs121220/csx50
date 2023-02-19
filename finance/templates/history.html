@@ -22,7 +22,7 @@
                     <td>{{ row["symbol"] }}</td>
                     <td>{{ row["price"] }}</td>
                     <td>{{ row["shares"] }}</td>
-                    <td>{{ row["date_time"].strftime("%Y-%m-%d %I:%M %p") }}</td>
+                    <td>{{ row["timestamp"].strftime("%Y-%m-%d %I:%M %p") }}</td>
                 </tr>
             {% endfor %}
         </tbody>
