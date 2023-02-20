@@ -1,7 +1,7 @@
 //---------------------------------
-//Markus Dwiyanto Tobi Sogen
-//CS50 for teachers
-//Indonesia
+//From our beloved Land of Papua we write this code
+//
+//
 //caesar.c
 //---------------------------------
 #include <cs50.h>
@@ -34,7 +34,7 @@ int main(int argc, string argv[])
     printf("ciphertext: ");     //print the encipher
 
     int plaintext_length = strlen(plaintext);  //to check the length of plaintext
-    
+
     for (int i = 0; i < plaintext_length; i++)  //iterate
     {
         if (isupper(plaintext[i]))   // if character is Upper case encipher
