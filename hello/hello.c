@@ -1,7 +1,7 @@
 //---------------------------------
-//Markus Dwiyanto Tobi Sogen
-//CS50 for teachers
-//Indonesia
+//From our beloved Land of Papua we write this code
+//
+//
 //Hello.c
 //---------------------------------
 #include <cs50.h>
@@ -9,5 +9,5 @@
 
 int main(void)
 {
-    
+
 }
