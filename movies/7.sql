@@ -1,7 +1,7 @@
 ---------------------------------
--- Markus Dwiyanto Tobi Sogen
--- CS50 for teachers
--- Indonesia
+-- From our beloved Land of Papua we write this code
+--
+--
 -- query to list all movies released in 2010 and their ratings, in descending order by rating.
 -- For movies with the same rating, order them alphabetically by title
 ----------------------------------

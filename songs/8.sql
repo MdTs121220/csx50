@@ -1,7 +1,7 @@
----------------------------------
--- Markus Dwiyanto Tobi Sogen
--- CS50 for teachers
--- Indonesia
+-----------------------------------
+--- From our beloved Land of Papua we write this code
+----
+----
 -- query that lists the names of the songs that feature other artists
 ----------------------------------
 

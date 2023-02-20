@@ -1,4 +1,7 @@
-// Modifies the volume of an audio file
+//-----------------------------------
+//--- From our beloved Land of Papua we write this code
+//----
+//----
 
 #include <stdint.h>
 #include <stdio.h>

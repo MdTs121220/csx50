@@ -1,7 +1,7 @@
 ---------------------------------
--- Markus Dwiyanto Tobi Sogen
--- CS50 for teachers
--- Indonesia
+-- From our beloved Land of Papua we write this code
+--
+--
 -- query to list the titles of all movies with a release date on or after 2018, in alphabetical order.
 ----------------------------------
 

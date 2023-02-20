@@ -1,7 +1,7 @@
----------------------------------
--- Markus Dwiyanto Tobi Sogen
--- CS50 for teachers
--- Indonesia
+-----------------------------------
+--- From our beloved Land of Papua we write this code
+----
+----
 -- query to list the names of the top 5 longest songs, in descending order of length
 ----------------------------------
 
